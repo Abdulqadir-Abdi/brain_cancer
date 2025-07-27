@@ -76,7 +76,8 @@ Sample MRI images are available in the `uploads/` directory for testing.
 ## Notes
 - Ensure your model files are present and paths are correct in `flask_api.py`.
 - The system requires both the PHP web server and the Flask API to be running.
-- For best results, use clear, high-quality MRI images.
+- For best results, use clear, high-quality MRI images. test
+
 
 ## License
 [MIT License](LICENSE) (or specify your license) 
