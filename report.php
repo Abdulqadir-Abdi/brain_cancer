@@ -102,115 +102,100 @@ if (isset($_GET['export']) && $_GET['export'] == 'excel') {
 
   <style>
     body, html {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    scroll-behavior: smooth;
-    font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #f8f9fa 60%, #e6e6fa 100%);
+      min-height: 100vh;
+      font-family: 'Poppins', Arial, sans-serif;
+      color: #333;
     }
-
-    body {
-      padding-top: 80px !important;  /* Removed top space */
-      background-color: #f8f9fa;
+    .container, .content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-top: 40px;
     }
-
-    .navbar {
-      background: #fff;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-      transition: all 0.3s ease;
-      padding: 20px 10px;
-    }
-
-    .navbar.shrink {
-      padding: 8px 10px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-    }
-
-    .nav-link {
-      font-weight: 500;
-      margin-right: 15px;
-      transition: background-color 0.3s ease;
-    }
-
-    /* ✅ Hover effect (blue) */
-    .nav-link:hover {
-      background-color: #007bff;
-      color: white !important;
-      border-radius: 6px;
-    }
-
-    /* ✅ Active link (e.g., current page) */
-    .nav-link.active {
-      background-color: #3b0a85;
-      color: white !important;
-      border-radius: 6px;
-      padding: 6px 12px;
-    }
-
-    .dropdown-toggle img {
-      border-radius: 50%;
-      object-fit: cover;
-      border: 2px solid #ccc;
-    }
-
-    .dropdown-toggle img {
-      border-radius: 50%;
-      object-fit: cover;
-      border: 2px solid #ccc;
-    }
-
-    .btn {
-      border-radius: 8px;
-      font-weight: 500;
-    }
-    .table th, .table td {
-      vertical-align: middle;
+    h2, h3, h4 {
+      font-family: 'Poppins', Arial, sans-serif;
+      font-weight: 800;
+      color: #3b0a85;
+      letter-spacing: 1px;
     }
     .filter-card {
-      background-color: #ffffff;
-      padding: 25px;
-      border-radius: 15px;
-      box-shadow: 0 10px 30px rgba(109, 8, 233, 0.05);
-      margin-bottom: 40px;
+      background: #fff;
+      padding: 2rem 1.5rem;
+      border-radius: 1.5rem;
+      box-shadow: 0 6px 20px rgba(59,10,133,0.08);
+      margin-bottom: 2.5rem;
     }
     .filter-card .form-control, .filter-card .btn {
       min-height: 45px;
-      font-size: 15px;
+      font-size: 1.1rem;
+      border-radius: 1rem;
+      font-family: 'Poppins', Arial, sans-serif;
     }
-    .filter-card input[type="text"] { max-width: 200px; }
-    .filter-card select { max-width: 180px; }
-    .filter-card input[type="date"] { max-width: 180px; }
+    .filter-card input[type="text"], .filter-card select, .filter-card input[type="date"] {
+      max-width: 200px;
+      margin-right: 0.5rem;
+    }
+    .table-responsive {
+      border-radius: 1.2rem;
+      box-shadow: 0 2px 12px rgba(59,10,133,0.07);
+      background: #fff;
+      padding: 1.2rem 0.5rem;
+    }
+    table.table {
+      background: #fff;
+      border-radius: 1.2rem;
+      overflow: hidden;
+      font-family: 'Poppins', Arial, sans-serif;
+    }
+    table.table th, table.table td {
+      vertical-align: middle;
+      font-size: 1.05rem;
+      padding: 0.85rem 0.7rem;
+    }
+    table.table thead th {
+      background: #3b0a85;
+      color: #fff;
+      border: none;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+    .btn-warning, .btn-danger, .btn-success, .btn-secondary {
+      border-radius: 1.2rem;
+      font-weight: 600;
+      padding: 0.4rem 1.1rem;
+      font-size: 1rem;
+      margin-right: 0.2rem;
+      font-family: 'Poppins', Arial, sans-serif;
+    }
+    .btn-warning i, .btn-danger i, .btn-success i, .btn-secondary i {
+      margin-right: 0.3rem;
+    }
+    @media (max-width: 991px) {
+      .container, .content { padding-top: 20px; }
+      .filter-card { padding: 1.2rem 0.5rem; }
+      table.table th, table.table td { font-size: 0.95rem; padding: 0.5rem 0.3rem; }
+    }
+    @media (max-width: 767px) {
+      .container, .content { padding-top: 10px; }
+      .filter-card, .table-responsive { border-radius: 1rem; }
+      h2, h3, h4 { font-size: 1.1rem; }
+    }
   </style>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
 <!-- Sidebar Navbar (Design-Only Change from Top Navbar) -->
 <div class="d-flex">
   <nav id="sidebar" class="bg-white shadow-sm vh-100 position-fixed" style="width: 250px; top: 0; left: 0; z-index: 1030;">
-    <div class="sidebar-header text-center py-4 border-bottom">
-      <a href="home.php" class="text-decoration-none font-weight-bold h5 d-block">Brain Cancer Detection</a>
-    </div>
+  <div class="sidebar-header text-center py-4 border-bottom" style="margin-top: 0;">
+    <a href="home.php" class="text-decoration-none font-weight-bold h5 d-block text-primary" style="font-family: 'Segoe UI', sans-serif;">
+      <i class="fas fa-brain mr-2"></i>Brain Cancer Detection
+    </a>
+  </div>
 
     <ul class="nav flex-column px-3 pt-3">
-      <li class="nav-item mb-2">
-        <a class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'home.php' ? 'active text-primary font-weight-bold' : 'text-dark' ?>" href="home.php">
-          <i class="fas fa-home mr-2"></i> Home
-        </a>
-      </li>
-
-      <li class="nav-item mb-2">
-        <a class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'predict.php' ? 'active text-primary font-weight-bold' : 'text-dark' ?>" href="predict.php">
-          <i class="fas fa-microscope mr-2"></i> Prediction
-        </a>
-      </li>
-
-      <li class="nav-item mb-2">
-        <a class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'report.php' ? 'active text-primary font-weight-bold' : 'text-dark' ?>" href="report.php">
-          <i class="fas fa-file-medical mr-2"></i> Report
-        </a>
-      </li>
-
-      <?php if ($role !== 'admin' && $role !== 'small-admin' && $role !== 'small-admi'): ?>
+    <?php if ($role !== 'admin' && $role !== 'small-admin' && $role !== 'small-admi'): ?>
       <li class="nav-item mb-2">
         <a class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'analyze.php' ? 'active text-primary font-weight-bold' : 'text-dark' ?>" href="analyze.php">
           <i class="fas fa-chart-bar mr-2"></i> Dashboard
@@ -231,6 +216,21 @@ if (isset($_GET['export']) && $_GET['export'] == 'excel') {
           </a>
         </li>
       <?php endif; ?>
+     
+
+      <li class="nav-item mb-2">
+        <a class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'predict.php' ? 'active text-primary font-weight-bold' : 'text-dark' ?>" href="predict.php">
+          <i class="fas fa-microscope mr-2"></i> Prediction
+        </a>
+      </li>
+
+      <li class="nav-item mb-2">
+        <a class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'report.php' ? 'active text-primary font-weight-bold' : 'text-dark' ?>" href="report.php">
+          <i class="fas fa-file-medical mr-2"></i> Report
+        </a>
+      </li>
+
+      
 
       <!-- Profile Dropdown Mimic -->
       <li class="nav-item mt-4 text-center border-top pt-4">

@@ -74,56 +74,108 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   <meta charset="UTF-8">
   <title>Edit Prediction Record</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(135deg, #f8f9fa 60%, #e6e6fa 100%);
+      min-height: 100vh;
+      font-family: 'Poppins', Arial, sans-serif;
+      color: #333;
+    }
+    .edit-card {
+      max-width: 500px;
+      margin: 60px auto;
+      border: none;
+      border-radius: 1.5rem;
+      box-shadow: 0 0 24px rgba(59,10,133,0.10);
+      background: #fff;
+      padding: 2.5rem 2rem 2rem 2rem;
+    }
+    h2 {
+      font-family: 'Poppins', Arial, sans-serif;
+      font-weight: 800;
+      color: #3b0a85;
+      letter-spacing: 1px;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    .form-label {
+      font-weight: 600;
+      font-size: 1.1rem;
+      font-family: 'Poppins', Arial, sans-serif;
+    }
+    .form-control, .form-select {
+      font-size: 1.1rem;
+      padding: 0.85rem 1rem;
+      border-radius: 1rem;
+      margin-bottom: 1rem;
+      font-family: 'Poppins', Arial, sans-serif;
+    }
+    .btn-primary {
+      background: linear-gradient(90deg, #3b0a85, #5f2db4);
+      color: #fff;
+      border: none;
+      font-size: 1.15rem;
+      font-weight: 700;
+      padding: 0.9rem 0;
+      border-radius: 2rem;
+      transition: background 0.3s, transform 0.2s;
+      box-shadow: 0 2px 12px rgba(59,10,133,0.10);
+      letter-spacing: 1px;
+      width: 100%;
+      font-family: 'Poppins', Arial, sans-serif;
+    }
+    .btn-primary:hover {
+      background: linear-gradient(90deg, #5f2db4, #3b0a85);
+      color: #fff;
+      transform: translateY(-2px) scale(1.04);
+    }
+    p, label, input, select, button {
+      font-family: 'Poppins', Arial, sans-serif;
+    }
+    @media (max-width: 767px) {
+      .edit-card { padding: 1.2rem 0.5rem; max-width: 98vw; }
+      h2 { font-size: 1.2rem; }
+      .form-control, .form-select { font-size: 1rem; padding: 0.7rem 0.7rem; }
+    }
+  </style>
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#">Brain Cancer Detection</a>
-  <div class="collapse navbar-collapse">
-    <ul class="navbar-nav ml-auto">
-      <li class="nav-item"><a class="nav-link" href="home.php">Home</a></li>
-      <li class="nav-item"><a class="nav-link" href="predict.php">Prediction</a></li>
-      <li class="nav-item"><a class="nav-link" href="report.php">Report</a></li>
-      <li class="nav-item"><a class="nav-link" href="about.php">About</a></li>
-    </ul>
-  </div>
-</nav>
-
-<div class="container mt-5">
+<div class="edit-card">
   <h2>Edit Prediction Record</h2>
-
   <form method="POST">
     <input type="hidden" name="id" value="<?= htmlspecialchars($row['id']) ?>">
 
-    <div class="form-group">
-      <label>Full Name</label>
+    <div class="mb-3">
+      <label class="form-label">Full Name</label>
       <input type="text" name="fullname" class="form-control" value="<?= htmlspecialchars($row['fullname']) ?>" required>
     </div>
 
-    <div class="form-group">
-      <label>Age</label>
+    <div class="mb-3">
+      <label class="form-label">Age</label>
       <input type="number" name="age" class="form-control" value="<?= htmlspecialchars($row['age']) ?>" min="1" required>
     </div>
 
-    <div class="form-group">
-      <label>Phone Number</label>
+    <div class="mb-3">
+      <label class="form-label">Phone Number</label>
       <input type="tel" name="phone" class="form-control" value="<?= htmlspecialchars($row['phone']) ?>" required>
     </div>
 
-    <div class="form-group">
-      <label>Gender</label>
-      <select name="sex" class="form-control" required>
+    <div class="mb-3">
+      <label class="form-label">Gender</label>
+      <select name="sex" class="form-select" required>
         <option value="Male" <?= ($row['sex'] == 'Male') ? 'selected' : '' ?>>Male</option>
         <option value="Female" <?= ($row['sex'] == 'Female') ? 'selected' : '' ?>>Female</option>
       </select>
     </div>
 
-    <div class="form-group">
-      <label>Prediction</label>
+    <div class="mb-3">
+      <label class="form-label">Prediction</label>
       <input type="text" class="form-control" value="<?= htmlspecialchars($row['prediction']) ?>" readonly disabled>
     </div>
 
-    <button type="submit" class="btn btn-primary btn-block">Update Record</button>
+    <button type="submit" class="btn btn-primary">Update Record</button>
   </form>
 </div>
 

@@ -5,314 +5,342 @@ $user_name = $_SESSION['user_name'] ?? 'User Name';
 $user_email = $_SESSION['user_email'] ?? 'user@example.com';
 $user_role = $_SESSION['role'] ?? 'user';
 $profile_image = $_SESSION['profile_image'] ?? '';
-
 function has_valid_image($image_path) {
     return !empty($image_path) && $image_path !== 'images/default-avatar.png';
 }
 ?>
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Brain Cancer Detection</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
   <style>
-     body, html {
+    body, html {
       margin: 0;
       padding: 0;
-      height: 100%;
-      scroll-behavior: smooth;
+      min-height: 100vh;
       font-family: 'Poppins', sans-serif;
-    }
-    body {
-      padding-top: 80px;
-      background-color: #f8f9fa;
+      background: linear-gradient(135deg, #f8f9fa 60%, #e6e6fa 100%);
+      scroll-behavior: smooth;
     }
     .navbar {
       background: #fff;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-      transition: all 0.3s ease;
-      padding: 20px 10px;
+      box-shadow: 0 4px 16px rgba(59,10,133,0.07);
+      padding: 1rem 2rem;
+      border-bottom: 2px solid #f3f3f3;
     }
-    .navbar.shrink {
-      padding: 8px 10px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    .navbar-brand {
+      font-weight: 700;
+      color: #3b0a85 !important;
+      letter-spacing: 1px;
+      font-size: 1.5rem;
     }
     .nav-link {
       font-weight: 500;
-      margin-right: 15px;
+      margin-right: 1rem;
+      color: #333 !important;
+      transition: color 0.2s;
+      position: relative;
     }
-    .nav-link:hover {
-      color: #007bff;
+    .nav-link.active, .nav-link:hover {
+      color: #3b0a85 !important;
+    }
+    .nav-link.active::after, .nav-link:hover::after {
+      content: '';
+      display: block;
+      width: 60%;
+      height: 2px;
+      background: linear-gradient(90deg, #3b0a85, #ff8800);
+      margin: 0.2rem auto 0 auto;
+      border-radius: 2px;
     }
     .hero {
       position: relative;
       background-image: url('Home image.jpg');
       background-size: cover;
       background-position: center;
-      height: 100vh;
+      min-height: 80vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: white;
+      color: #fff;
       text-align: center;
+      overflow: hidden;
     }
-    .overlay {
+    .hero::before {
+      content: '';
       position: absolute;
-      top: 0;
-      left: 0;
-      height: 100%;
-      width: 100%;
-      background: rgba(0,0,0,0.5);
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: linear-gradient(120deg, rgba(59,10,133,0.85) 60%, rgba(255,136,0,0.7) 100%);
       z-index: 1;
+      animation: heroFadeIn 1.2s;
+    }
+    @keyframes heroFadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
     .hero-content {
       position: relative;
       z-index: 2;
-      background-color: rgba(255, 255, 255, 0.95);
-      padding: 40px;
-      border-radius: 12px;
+      background: rgba(255,255,255,0.98);
+      color: #222;
+      padding: 3.5rem 2.5rem;
+      border-radius: 2rem;
       max-width: 650px;
-      text-align: center;
+      margin: 2rem auto;
+      box-shadow: 0 8px 32px rgba(59,10,133,0.13);
+      animation: fadeInUp 1.2s;
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
     }
     .anthem {
-      background: linear-gradient(to right, #ff8800, #3b0a85);
-      color: white;
+      background: linear-gradient(90deg, #ff8800, #3b0a85);
+      color: #fff;
       font-weight: bold;
-      padding: 8px 20px;
-      border-radius: 20px;
+      padding: 0.5rem 1.5rem;
+      border-radius: 2rem;
       display: inline-block;
-      margin-bottom: 20px;
-      font-size: 14px;
+      margin-bottom: 1.2rem;
+      font-size: 1rem;
       letter-spacing: 1px;
+      box-shadow: 0 2px 8px rgba(59,10,133,0.08);
+      animation: fadeIn 2s;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
     .hero-content h2 {
-      font-weight: bold;
-      margin-bottom: 20px;
-      color: #111;
+      font-weight: 800;
+      margin-bottom: 1.2rem;
+      color: #3b0a85;
+      font-size: 2.5rem;
+      letter-spacing: 1px;
     }
     .hero-content p {
       color: #555;
-      font-size: 18px;
-      margin-bottom: 30px;
+      font-size: 1.15rem;
+      margin-bottom: 2.2rem;
     }
     .btn-purple {
-      background-color: #3b0a85;
+      background: linear-gradient(90deg, #3b0a85, #5f2db4);
+      color: #fff;
       border: none;
-      font-size: 18px;
-      font-weight: bold;
-      padding: 10px 25px;
-      border-radius: 30px;
-      transition: background-color 0.3s ease;
+      font-size: 1.15rem;
+      font-weight: 700;
+      padding: 0.85rem 2.7rem;
+      border-radius: 2rem;
+      transition: background 0.3s, transform 0.2s;
+      box-shadow: 0 2px 8px rgba(59,10,133,0.10);
+      letter-spacing: 1px;
     }
     .btn-purple:hover {
-      background-color: #5f2db4;
+      background: linear-gradient(90deg, #5f2db4, #3b0a85);
+      color: #fff;
+      transform: translateY(-2px) scale(1.04);
     }
     .scroll-down {
       position: absolute;
-      bottom: 20px;
+      bottom: 2.5rem;
       left: 50%;
       transform: translateX(-50%);
-      font-size: 30px;
-      color: white;
+      font-size: 2.2rem;
+      color: #fff;
       animation: bounce 2s infinite;
       z-index: 2;
       cursor: pointer;
+      opacity: 0.85;
     }
     @keyframes bounce {
       0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
-      40% { transform: translateX(-50%) translateY(-10px); }
-      60% { transform: translateX(-50%) translateY(-5px); }
+      40% { transform: translateX(-50%) translateY(-12px); }
+      60% { transform: translateX(-50%) translateY(-6px); }
     }
-    .card-img-top {
-      width: 100%;
-      height: 320px;
-      object-fit: cover;
-      object-position: center;
-    }
-    .card-title {
-      font-weight: 700;
-      font-size: 18px;
-      margin-top: 10px;
-      color: #333;
+    .section-title {
+      font-weight: 800;
+      color: #3b0a85;
+      margin-bottom: 2.5rem;
       text-align: center;
-    
+      letter-spacing: 1px;
     }
-    .dropdown-menu {
-      min-width: 250px;
-    }
-    .dropdown-menu {
-  left: 10% !important;
-  right: auto;
-}
-
-    .fa-user-circle, .profile-icon {
-      font-size: 35px;
-      color: #6c757d;
-    }
-    .fa-user-circle.large {
-      font-size: 60px;
-    }
-    .rounded-circle {
+    .card-img-top, .card-img {
+      width: 100%;
+      height: 120px;
       object-fit: cover;
-    }
-    .card-img {
-      max-height: 250px;
-      object-fit: contain;
+      border-radius: 1rem 1rem 0 0;
+      transition: transform 0.3s;
     }
     .card {
-      max-width: 100%;
-      height: 100%;
+      border: none;
+      border-radius: 1rem;
+      box-shadow: 0 2px 12px rgba(59,10,133,0.07);
+      transition: transform 0.2s, box-shadow 0.2s;
+      overflow: hidden;
+      background: #fff;
     }
-    .card-body p {
-      font-size: 0.9rem;
+    .card:hover {
+      transform: translateY(-6px) scale(1.025);
+      box-shadow: 0 12px 32px rgba(59,10,133,0.15);
     }
+    .card-header {
+      border-radius: 1rem 1rem 0 0;
+      font-weight: 700;
+      font-size: 1.1rem;
+      letter-spacing: 0.5px;
+    }
+    .footer {
+      background: #3b0a85;
+      color: #fff;
+      padding: 2rem 0 1rem 0;
+      margin-top: 3rem;
+      border-top-left-radius: 2rem;
+      border-top-right-radius: 2rem;
+      box-shadow: 0 -2px 16px rgba(59,10,133,0.07);
+    }
+    .footer a { color: #fff; opacity: 0.8; transition: opacity 0.2s; }
+    .footer a:hover { opacity: 1; }
+    .team-card img {
+      height: 180px;
+      object-fit: cover;
+      border-radius: 1rem 1rem 0 0;
+      filter: grayscale(10%);
+      transition: filter 0.3s, transform 0.3s;
+    }
+    .team-card:hover img {
+      filter: grayscale(0%);
+      transform: scale(1.04);
+    }
+    .team-card .card-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #3b0a85;
+      letter-spacing: 0.5px;
+    }
+    .team-card .social-icons {
+      margin-top: 0.5rem;
+    }
+    .team-card .social-icons a {
+      color: #3b0a85;
+      margin: 0 0.3rem;
+      font-size: 1.2rem;
+      opacity: 0.7;
+      transition: opacity 0.2s, color 0.2s;
+    }
+    .team-card .social-icons a:hover {
+      color: #ff8800;
+      opacity: 1;
+    }
+    @media (max-width: 767px) {
+      .hero-content { padding: 2rem 1rem; }
+      .card-img-top, .card-img { height: 80px; }
+      .team-card img { height: 120px; }
+      .footer { border-radius: 0; }
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+    /* Fixes card layout to wrap around content correctly */
+.card {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+/* Fix for regular content card images */
+.card-img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 0.35rem;
+}
+
+/* Used for flexible custom cards like pie chart, MRI etc. */
+.card-img-custom {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 0.35rem;
+}
+
+/* Team images */
+.card-img-top {
+  width: 100%;
+  height: 280px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 0.5rem 0.5rem 0 0;
+}
+
+/* Text inside cards */
+.card-body p {
+  font-size: 0.95rem;
+  margin-bottom: 0;
+}
+
   </style>
-
-  
-
 </head>
 <body>
-
-<!-- Sidebar Navbar -->
-<div class="d-flex">
-  <nav id="sidebar" class="bg-white shadow-sm vh-100 position-fixed" style="width: 250px; top: 0; left: 0; z-index: 1030;">
-    <div class="sidebar-header text-center py-4 border-bottom">
-      <a href="home.php" class="text-decoration-none font-weight-bold h5 d-block">Brain Cancer Detection</a>
-    </div>
-
-    <ul class="nav flex-column px-3 pt-3">
-      <li class="nav-item mb-2">
-        <a class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'home.php' ? 'active text-primary font-weight-bold' : 'text-dark' ?>" href="home.php">
-          <i class="fas fa-home mr-2"></i> Home
-        </a>
-      </li>
-
-      <?php if ($logged_in): ?>
-        <li class="nav-item mb-2">
-          <a class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'predict.php' ? 'active text-primary font-weight-bold' : 'text-dark' ?>" href="predict.php">
-            <i class="fas fa-microscope mr-2"></i> Prediction
+<?php if ($logged_in): ?>
+<!-- Navbar for logged-in users -->
+<nav class="navbar navbar-expand-lg navbar-light sticky-top">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="home.php"><i class="fas fa-brain me-2"></i>Brain Cancer Detection</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <li class="nav-item"><a class="nav-link<?= basename($_SERVER['PHP_SELF']) == 'analyze.php' ? ' active' : '' ?>" href="analyze.php">Dashboard</a></li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <?php if (has_valid_image($profile_image)): ?>
+              <img src="<?= htmlspecialchars($profile_image); ?>" class="rounded-circle" width="32" height="32" alt="Profile Image">
+            <?php else: ?>
+              <i class="fas fa-user-circle"></i>
+            <?php endif; ?>
+            <?= htmlspecialchars($user_name); ?>
           </a>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+            <li><a class="dropdown-item" href="update_profile.php"><i class="fas fa-user-edit me-2"></i>Update Profile</a></li>
+            <li><a class="dropdown-item" href="upload_profile_image.php"><i class="fas fa-camera me-2"></i>Upload Image</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item text-danger" href="#" onclick="return confirmAccountDelete();"><i class="fas fa-trash-alt me-2"></i>Delete Account</a></li>
+            <li><a class="dropdown-item text-danger fw-bold" href="logout.php"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+          </ul>
         </li>
-        <li class="nav-item mb-2">
-          <a class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'report.php' ? 'active text-primary font-weight-bold' : 'text-dark' ?>" href="report.php">
-            <i class="fas fa-file-medical mr-2"></i> Report
-          </a>
-        </li>
-        <?php if ($user_role !== 'admin' && $user_role !== 'small-admin' && $user_role !== 'small-admi'): ?>
-  <li class="nav-item mb-2">
-    <a class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'analyze.php' ? 'active text-primary font-weight-bold' : 'text-dark' ?>" href="analyze.php">
-      <i class="fas fa-chart-bar mr-2"></i> Dashboard
-    </a>
-  </li>
-<?php endif; ?>
-
-
-        <?php if ($user_role === 'admin'): ?>
-          <li class="nav-item mb-2">
-            <a class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'dashboard.php' ? 'active text-primary font-weight-bold' : 'text-dark' ?>" href="dashboard.php">
-              <i class="fas fa-users-cog mr-2"></i> Dashboard
-            </a>
-          </li>
-        <?php elseif ($user_role === 'small-admin' || $user_role === 'small-admi'): ?>
-          <li class="nav-item mb-2">
-            <a class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'dashboard.php' ? 'active text-primary font-weight-bold' : 'text-dark' ?>" href="dashboard.php">
-              <i class="fas fa-user-friends mr-2"></i> My Users
-            </a>
-          </li>
-        <?php endif; ?>
-      <?php else: ?>
-        <li class="nav-item mt-4">
-          <a class="btn btn-outline-primary w-100" href="login.html">Login</a>
-        </li>
-      <?php endif; ?>
-
-      <?php if ($logged_in): ?>
-  <!-- Sidebar User Dropdown -->
-  <li class="nav-item dropdown text-center mt-4 border-top pt-4">
-    <!-- Toggle Button -->
-    <a class="nav-link dropdown-toggle d-block p-0" href="#" id="sidebarUserDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      <?php if (has_valid_image($profile_image)): ?>
-        <img src="<?= htmlspecialchars($profile_image); ?>" class="rounded-circle mb-2" width="60" height="60" alt="Profile Image">
-      <?php else: ?>
-        <i class="fas fa-user-circle fa-3x text-muted mb-2"></i>
-      <?php endif; ?>
-      <div class="font-weight-bold text-capitalize"><?= htmlspecialchars($user_name); ?></div>
-      <small class="text-muted"><?= htmlspecialchars($user_email); ?></small><br>
-      <span class="text-secondary small"><?= htmlspecialchars($user_role); ?></span>
-    </a>
-
-    <!-- Dropdown Menu -->
-    <div class="dropdown-menu shadow mt-2" aria-labelledby="sidebarUserDropdown" style="min-width: 230px;">
-      <a class="dropdown-item" href="update_profile.php"><i class="fas fa-user-edit mr-2"></i> Update Profile</a>
-      <a class="dropdown-item" href="upload_profile_image.php"><i class="fas fa-camera mr-2"></i> Upload Image</a>
-      <a class="dropdown-item text-danger" href="#" onclick="return confirmAccountDelete();"><i class="fas fa-trash-alt mr-2"></i> Delete Account</a>
-      <div class="dropdown-divider"></div>
-      <a class="dropdown-item text-danger font-weight-bold" href="logout.php"><i class="fas fa-sign-out-alt mr-2"></i> Logout</a>
-    </div>
-  </li>
-<?php endif; ?>
-
-
-
-
-
-    </ul>
-  </nav>
-
-  <!-- Main Content Area -->
-  <div class="content pl-4" style="margin-left: 350px;">
-    <!-- Your main page content goes here -->
-
-
-
-<!-- Username Modal -->
-<div class="modal fade" id="usernameModal" tabindex="-1" aria-labelledby="usernameModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Change Username</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <input type="text" id="username-input" class="form-control" placeholder="Enter new username">
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" onclick="handleUsernameChange()">Save</button>
-      </div>
+      </ul>
     </div>
   </div>
-</div>
-
-<!-- Password Modal -->
-<div class="modal fade" id="passwordModal" tabindex="-1" aria-labelledby="passwordModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Change Password</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <input type="password" id="password-input" class="form-control" placeholder="Enter new password">
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" onclick="handlePasswordChange()">Save</button>
-      </div>
+</nav>
+<?php else: ?>
+<!-- Navbar for guests (only Login button) -->
+<nav class="navbar navbar-expand-lg navbar-light sticky-top">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="home.php"><i class="fas fa-brain me-2"></i>Brain Cancer Detection</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <li class="nav-item"><a class="btn btn-outline-primary ms-2" href="login.html">Login</a></li>
+      </ul>
     </div>
   </div>
-</div>
-
+</nav>
+<?php endif; ?>
 <!-- Hero Section -->
-<div class="hero" id="hero-section" style="position: relative; background-image: url('Home image.jpg'); background-size: cover; background-position: center; height: 100vh; display: flex; align-items: center; justify-content: center; color: white; text-align: center;">
-  <div class="overlay" style="position: absolute; top: 0; left: 0; height: 100%; width: 100%; background: rgba(0,0,0,0.5); z-index: 1;"></div>
-  <div class="hero-content" style="position: relative; z-index: 2; background-color: rgba(255,255,255,0.95); padding: 40px; border-radius: 12px; max-width: 650px;">
-    <div class="anthem">LISTEN TO OUR NEW ANTHEM</div>
+<section class="hero d-flex align-items-center justify-content-center">
+  <div class="hero-content shadow-lg">
+    <div class="anthem mb-2">LISTEN TO OUR NEW ANTHEM</div>
     <h2>Find the most Exciting Online Brain Cancer Prediction</h2>
     <p>This platform uses Machine Learning to detect brain cancer from MRI images, helping doctors with early diagnosis and treatment.</p>
     <a href="predict.php" class="btn btn-purple">Start Prediction</a>
@@ -320,21 +348,20 @@ function has_valid_image($image_path) {
   <div class="scroll-down">
     <a href="#about-section"><i class="fas fa-chevron-down"></i></a>
   </div>
-</div>
-
-<!-- About Section as Bootstrap Card -->
-<div class="container my-5" id="about-section">
+</section>
+<!-- About Section -->
+<section class="container my-5" id="about-section">
   <div class="row justify-content-center">
     <div class="col-lg-10">
       <div class="card shadow-lg border-0">
         <div class="card-body p-5 text-center">
-          <h2 class="card-title fw-bold mb-4" style="font-size: 2rem;">About This Project</h2>
-          <p class="card-text fs-5 text-muted mb-4">
+          <h2 class="section-title">About This Project</h2>
+          <p class="fs-5 text-muted mb-4">
             This project is a web-based brain cancer detection system powered by machine learning.<br>
             It analyzes MRI images uploaded by users to predict the presence of cancer.<br>
             The system provides instant feedback using a pre-trained deep learning model.
           </p>
-          <p class="card-text fs-5 text-muted">
+          <p class="fs-5 text-muted">
             Users can view prediction summaries, gender-based insights, and age range statistics.<br>
             The dashboard includes real-time charts and an option to export results as PDF.<br>
             It is designed to assist doctors, researchers, and patients in early diagnosis.
@@ -343,8 +370,8 @@ function has_valid_image($image_path) {
       </div>
     </div>
   </div>
-</div>
-
+</section>
+<!-- Sample Dataset Images -->
 <div class="container py-4">
   <h2 class="text-center mb-4">Sample Dataset Images: Cancer and No-Cancer MRI Scans</h2>
 
@@ -513,67 +540,7 @@ function has_valid_image($image_path) {
     </div>
   </div>
 </footer>
-
-<script>
-const handleUsernameChange = async () => {
-  const newUsername = document.getElementById("username-input").value.trim();
-
-  if (!newUsername) {
-    alert("Please enter a new username.");
-    return;
-  }
-
-  try {
-    const res = await fetch("update_username.php", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username: newUsername })
-    });
-
-    const data = await res.json();
-    if (data.success) {
-      alert("Username updated successfully.");
-      var usernameModal = bootstrap.Modal.getInstance(document.getElementById("usernameModal"));
-      usernameModal.hide();
-    } else {
-      alert("Failed to update username.");
-    }
-  } catch (err) {
-    alert("Error occurred.");
-    console.error(err);
-  }
-};
-
-const handlePasswordChange = async () => {
-  const newPassword = document.getElementById("password-input").value.trim();
-
-  if (!newPassword) {
-    alert("Please enter a new password.");
-    return;
-  }
-
-  try {
-    const res = await fetch("update_password.php", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ password: newPassword })
-    });
-
-    const data = await res.json();
-    if (data.success) {
-      alert("Password updated successfully.");
-      var passwordModal = bootstrap.Modal.getInstance(document.getElementById("passwordModal"));
-      passwordModal.hide();
-    } else {
-      alert("Failed to update password.");
-    }
-  } catch (err) {
-    alert("Error occurred.");
-    console.error(err);
-  }
-};
-</script>
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
 function confirmAccountDelete() {
@@ -590,22 +557,8 @@ function confirmAccountDelete() {
       window.location.href = 'delete_account.php';
     }
   });
-  return false; // Prevent default anchor click
+  return false;
 }
 </script>
-
-
-<!-- Sidebar Profile Section -->
-<!-- Sidebar Profile Section -->
-
-
-
-
-
-
-<!-- Scripts -->
- 
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

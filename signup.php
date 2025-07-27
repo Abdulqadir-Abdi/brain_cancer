@@ -27,50 +27,89 @@ if (!$conn) {
   
   <style>
     body {
-      background-color: #f8f9fa;
+      background: linear-gradient(135deg, #f8f9fa 60%, #e6e6fa 100%);
+      min-height: 100vh;
+      font-family: 'Poppins', Arial, sans-serif;
+      color: #333;
     }
-
     .card {
-      max-width: 550px;
+      max-width: 500px;
       margin: 60px auto;
       border: none;
-      border-radius: 15px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      border-radius: 1.5rem;
+      box-shadow: 0 0 24px rgba(59,10,133,0.10);
+      background: #fff;
     }
-
     .card-img-top {
-      height: 230px;
+      height: 200px;
       object-fit: cover;
-      border-top-left-radius: 15px;
-      border-top-right-radius: 15px;
+      border-top-left-radius: 1.5rem;
+      border-top-right-radius: 1.5rem;
     }
-
     .avatar-icon {
       width: 75px;
       height: 75px;
       background-color: #fff;
-      border: 3px solid #0d6efd;
+      border: 3px solid #3b0a85;
       border-radius: 50%;
       display: flex;
       justify-content: center;
       align-items: center;
       margin: -38px auto 10px auto;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      box-shadow: 0 4px 10px rgba(59,10,133,0.10);
     }
-
     .avatar-icon i {
-      font-size: 28px;
-      color: #0d6efd;
+      font-size: 2rem;
+      color: #3b0a85;
     }
-
-    .btn-primary {
-      font-weight: bold;
+    h4 {
+      font-family: 'Poppins', Arial, sans-serif;
+      font-weight: 800;
+      color: #3b0a85;
+      letter-spacing: 1px;
     }
-
     .form-label {
-      font-weight: 500;
+      font-weight: 600;
+      font-size: 1.1rem;
+      font-family: 'Poppins', Arial, sans-serif;
+    }
+    .form-control, .form-select {
+      font-size: 1.1rem;
+      padding: 0.85rem 1rem;
+      border-radius: 1rem;
+      margin-bottom: 1rem;
+      font-family: 'Poppins', Arial, sans-serif;
+    }
+    .btn-primary {
+      background: linear-gradient(90deg, #3b0a85, #5f2db4);
+      color: #fff;
+      border: none;
+      font-size: 1.15rem;
+      font-weight: 700;
+      padding: 0.9rem 0;
+      border-radius: 2rem;
+      transition: background 0.3s, transform 0.2s;
+      box-shadow: 0 2px 12px rgba(59,10,133,0.10);
+      letter-spacing: 1px;
+      width: 100%;
+      font-family: 'Poppins', Arial, sans-serif;
+    }
+    .btn-primary:hover {
+      background: linear-gradient(90deg, #5f2db4, #3b0a85);
+      color: #fff;
+      transform: translateY(-2px) scale(1.04);
+    }
+    p, label, input, select, button {
+      font-family: 'Poppins', Arial, sans-serif;
+    }
+    @media (max-width: 767px) {
+      .card { padding: 1.2rem 0.5rem; max-width: 98vw; }
+      .card-img-top { height: 120px; }
+      h4 { font-size: 1.2rem; }
+      .form-control, .form-select { font-size: 1rem; padding: 0.7rem 0.7rem; }
     }
   </style>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
 

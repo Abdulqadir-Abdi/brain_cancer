@@ -48,80 +48,67 @@ if ($user_row = $user_result->fetch_assoc()) {
 
   <style>
     body {
-      padding-top: 0 !important;  /* Removed top space */
-      background-color: #f8f9fa;
+      background: linear-gradient(135deg, #f8f9fa 60%, #e6e6fa 100%);
+      min-height: 100vh;
+      font-family: 'Poppins', sans-serif;
     }
-
-    .navbar {
-      background: #fff;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-      transition: all 0.3s ease;
-      padding: 20px 10px;
-    }
-
-    .navbar.shrink {
-      padding: 8px 10px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-    }
-
-    .nav-link {
-      font-weight: 500;
-      margin-right: 15px;
-      transition: background-color 0.3s ease;
-    }
-
-    /* ✅ Hover effect added */
-    .nav-link:hover {
-      background-color: #007bff;
-      color: white !important;
-      border-radius: 6px;
-    }
-
-    /* ✅ Active link (e.g., current page) */
-    .nav-link.active {
-      background-color: #3b0a85;
-      color: white !important;
-      border-radius: 6px;
-      padding: 6px 12px;
-    }
-
-    .dropdown-toggle img {
-      border-radius: 50%;
-      object-fit: cover;
-      border: 2px solid #ccc;
-    }
-        .form-wrapper {
+    .form-wrapper {
       max-width: 600px;
-      margin: 150px auto 50px auto;  /* 🔧 100px top margin */
-      background: white;
-      padding: 40px;
-      border-radius: 16px;
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      margin: 80px auto 50px auto;
+      background: #fff;
+      padding: 2.5rem 2rem 2rem 2rem;
+      border-radius: 1.5rem;
+      box-shadow: 0 0 24px rgba(59,10,133,0.10);
+      animation: fadeInUp 1.2s;
     }
-
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
     .form-wrapper h2 {
-      font-weight: bold;
+      font-weight: 800;
+      color: #3b0a85;
+      margin-bottom: 2rem;
       text-align: center;
-      margin-bottom: 30px;
+      font-size: 2rem;
+      letter-spacing: 1px;
     }
     .form-wrapper label {
-      font-weight: 500;
+      font-weight: 600;
+      font-size: 1.1rem;
     }
-    .form-control,
-    .form-control-file {
-      border-radius: 8px;
-      padding: 12px;
-      font-size: 16px;
+    .form-control, .form-control-file {
+      font-size: 1.1rem;
+      padding: 0.85rem 1rem;
+      border-radius: 1rem;
+      margin-bottom: 1rem;
+    }
+    .input-group-text {
+      font-size: 1.1rem;
+      border-radius: 1rem 0 0 1rem;
     }
     .btn-primary {
-      background-color: #3b0a85;
+      background: linear-gradient(90deg, #3b0a85, #5f2db4);
+      color: #fff;
       border: none;
-      border-radius: 8px;
-      padding: 12px;
-      font-weight: bold;
+      font-size: 1.15rem;
+      font-weight: 700;
+      padding: 0.9rem 0;
+      border-radius: 2rem;
+      transition: background 0.3s, transform 0.2s;
+      box-shadow: 0 2px 12px rgba(59,10,133,0.10);
+      letter-spacing: 1px;
+      width: 100%;
     }
     .btn-primary:hover {
-      background-color: #5f2db4;
+      background: linear-gradient(90deg, #5f2db4, #3b0a85);
+      color: #fff;
+      transform: translateY(-2px) scale(1.04);
+    }
+    @media (max-width: 767px) {
+      .form-wrapper { padding: 1.2rem 0.5rem; max-width: 98vw; }
+      .form-wrapper h2 { font-size: 1.2rem; }
+      .form-control, .form-control-file { font-size: 1rem; padding: 0.7rem 0.7rem; }
     }
   </style>
 </head>
@@ -130,28 +117,13 @@ if ($user_row = $user_result->fetch_assoc()) {
 <!-- Sidebar Navbar (Converted from top navbar) -->
 <div class="d-flex">
   <nav id="sidebar" class="bg-white shadow-sm vh-100 position-fixed" style="width: 250px; top: 0; left: 0; z-index: 1030;">
-    <div class="sidebar-header text-center py-4 border-bottom">
-      <a href="home.php" class="text-decoration-none font-weight-bold h5 d-block">Brain Cancer Detection</a>
-    </div>
-
+  <div class="sidebar-header text-center py-4 border-bottom" style="margin-top: 0;">
+    <a href="home.php" class="text-decoration-none font-weight-bold h5 d-block text-primary" style="font-family: 'Segoe UI', sans-serif;">
+      <i class="fas fa-brain mr-2"></i>Brain Cancer Detection
+    </a>
+  </div>
     <ul class="nav flex-column px-3 pt-3">
-      <li class="nav-item mb-2">
-        <a class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'home.php' ? 'active text-primary font-weight-bold' : 'text-dark' ?>" href="home.php">
-          <i class="fas fa-home mr-2"></i> Home
-        </a>
-      </li>
-      <li class="nav-item mb-2">
-        <a class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'predict.php' ? 'active text-primary font-weight-bold' : 'text-dark' ?>" href="predict.php">
-          <i class="fas fa-microscope mr-2"></i> Prediction
-        </a>
-      </li>
-      <li class="nav-item mb-2">
-        <a class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'report.php' ? 'active text-primary font-weight-bold' : 'text-dark' ?>" href="report.php">
-          <i class="fas fa-file-medical mr-2"></i> Report
-        </a>
-      </li>
-
-      <?php if ($role !== 'admin' && $role !== 'small-admin' && $role !== 'small-admi'): ?>
+    <?php if ($role !== 'admin' && $role !== 'small-admin' && $role !== 'small-admi'): ?>
         <li class="nav-item mb-2">
           <a class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'analyze.php' ? 'active text-primary font-weight-bold' : 'text-dark' ?>" href="analyze.php">
             <i class="fas fa-chart-bar mr-2"></i> Dashboard
@@ -172,6 +144,19 @@ if ($user_row = $user_result->fetch_assoc()) {
           </a>
         </li>
       <?php endif; ?>
+      
+      <li class="nav-item mb-2">
+        <a class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'predict.php' ? 'active text-primary font-weight-bold' : 'text-dark' ?>" href="predict.php">
+          <i class="fas fa-microscope mr-2"></i> Prediction
+        </a>
+      </li>
+      <li class="nav-item mb-2">
+        <a class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'report.php' ? 'active text-primary font-weight-bold' : 'text-dark' ?>" href="report.php">
+          <i class="fas fa-file-medical mr-2"></i> Report
+        </a>
+      </li>
+
+      
 
       <!-- Profile Dropdown Styled -->
       <li class="nav-item dropdown text-center mt-4 pt-3 border-top">

@@ -119,67 +119,61 @@ $total = $cancer + $no_cancer;
 
   <style>
    body {
-  padding-top: 80px !important;  /* Removed top space */
-  background-color: #f8f9fa;
-}
-
-.navbar {
-  background: #fff;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-  transition: all 0.3s ease;
-  padding: 20px 10px;
-}
-
-.navbar.shrink {
-  padding: 8px 10px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-}
-
-.nav-link {
-  font-weight: 500;
-  margin-right: 15px;
-  transition: background-color 0.3s ease;
-}
-
-/* ✅ Hover effect added */
-.nav-link:hover {
-  background-color: #007bff;
-  color: white !important;
-  border-radius: 6px;
-}
-
-/* ✅ Active link (e.g., current page) */
-.nav-link.active {
-  background-color: #3b0a85;
-  color: white !important;
-  border-radius: 6px;
-  padding: 6px 12px;
-}
-
-.dropdown-toggle img {
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid #ccc;
-}
-
-    .card-box { padding: 20px; background: white; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); } 
-    Section Heading Style (e.g., Prediction Statistics)
-.section-header {
-   margin-top: 100px; space below navbar
-  text-align: center;
-  font-weight: 600;
-  font-size: 28px;
-}
-
-/* Optional: Subheading */
-.section-subtext {
-  text-align: center;
-  color: #6c757d;
-  font-size: 16px;
-  margin-top: 5px;
-  margin-bottom: 40px;
-}
-
+    background: linear-gradient(135deg, #f8f9fa 60%, #e6e6fa 100%);
+    min-height: 100vh;
+    font-family: 'Poppins', sans-serif;
+    color: #333;
+  }
+  .container, .content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-top: 40px;
+  }
+  h2, h3, h4 {
+    font-weight: 800;
+    color: #3b0a85;
+    letter-spacing: 1px;
+  }
+  .card, .card-box {
+    border-radius: 1.5rem;
+    box-shadow: 0 6px 20px rgba(59,10,133,0.08);
+    background: #fff;
+    transition: transform 0.3s;
+    margin-bottom: 1.5rem;
+    padding: 2rem 1.5rem;
+  }
+  .card:hover, .card-box:hover {
+    transform: translateY(-4px) scale(1.03);
+  }
+  .card-title, .card-box h5 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #666;
+  }
+  .card h2, .card-box h2 {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #3b0a85;
+  }
+  .stat-cards .card {
+    text-align: center;
+    padding: 1.5rem 0.5rem;
+  }
+  .stat-cards .card h2 {
+    margin: 0.5rem 0 0 0;
+    font-size: 2.2rem;
+  }
+  @media (max-width: 991px) {
+    .container, .content { padding-top: 20px; }
+    .card, .card-box { padding: 1.2rem 0.5rem; }
+    .card h2, .card-box h2 { font-size: 1.3rem; }
+  }
+  @media (max-width: 767px) {
+    .container, .content { padding-top: 10px; }
+    .card, .card-box { border-radius: 1rem; }
+    .card h2, .card-box h2 { font-size: 1.1rem; }
+    h2, h3, h4 { font-size: 1.1rem; }
+  }
   </style>
 </head>
 <body>
@@ -196,30 +190,14 @@ $email = $_SESSION['user_email'] ?? 'unknown@example.com';
 <!-- Sidebar Navigation -->
 <div class="d-flex">
   <nav class="bg-white shadow-sm position-fixed vh-100" style="width: 250px; z-index: 1030;">
-    <div class="sidebar-header text-center py-4 border-bottom">
-      <a href="home.php" class="font-weight-bold h5 text-decoration-none">Brain Cancer Detection</a>
-    </div>
+  <div class="sidebar-header text-center py-4 border-bottom" style="margin-top: 0;">
+    <a href="home.php" class="text-decoration-none font-weight-bold h5 d-block text-primary" style="font-family: 'Segoe UI', sans-serif;">
+      <i class="fas fa-brain mr-2"></i>Brain Cancer Detection
+    </a>
+  </div>
 
     <ul class="nav flex-column px-3 pt-3">
-      <li class="nav-item mb-2">
-        <a class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'home.php' ? 'active text-primary font-weight-bold' : 'text-dark' ?>" href="home.php">
-          <i class="fas fa-home mr-2"></i> Home
-        </a>
-      </li>
-
-      <li class="nav-item mb-2">
-        <a class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'predict.php' ? 'active text-primary font-weight-bold' : 'text-dark' ?>" href="predict.php">
-          <i class="fas fa-microscope mr-2"></i> Prediction
-        </a>
-      </li>
-
-      <li class="nav-item mb-2">
-        <a class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'report.php' ? 'active text-primary font-weight-bold' : 'text-dark' ?>" href="report.php">
-          <i class="fas fa-file-medical mr-2"></i> Report
-        </a>
-      </li>
-
-      <?php if ($role !== 'admin' && $role !== 'small-admi' && $role !== 'small-admin'): ?>
+    <?php if ($role !== 'admin' && $role !== 'small-admi' && $role !== 'small-admin'): ?>
       <li class="nav-item mb-2">
         <a class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'analyze.php' ? 'active text-primary font-weight-bold' : 'text-dark' ?>" href="analyze.php">
           <i class="fas fa-chart-bar mr-2"></i> Dashboard
@@ -240,6 +218,19 @@ $email = $_SESSION['user_email'] ?? 'unknown@example.com';
           </a>
         </li>
       <?php endif; ?>
+      <li class="nav-item mb-2">
+        <a class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'predict.php' ? 'active text-primary font-weight-bold' : 'text-dark' ?>" href="predict.php">
+          <i class="fas fa-microscope mr-2"></i> Prediction
+        </a>
+      </li>
+
+      <li class="nav-item mb-2">
+        <a class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'report.php' ? 'active text-primary font-weight-bold' : 'text-dark' ?>" href="report.php">
+          <i class="fas fa-file-medical mr-2"></i> Report
+        </a>
+      </li>
+
+      
 
       <!-- Profile Collapsible -->
       <li class="nav-item text-center mt-4 pt-3 border-top">

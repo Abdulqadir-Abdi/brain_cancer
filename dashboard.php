@@ -126,115 +126,89 @@ $totalNoCancer = $no_cancer;
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <style>
-  /* ✅ Body Styling */
   body {
-    padding-top: 80px !important;
-    background-color: #f1f4f9;
+    background: linear-gradient(135deg, #f8f9fa 60%, #e6e6fa 100%);
+    min-height: 100vh;
     font-family: 'Poppins', sans-serif;
     color: #333;
   }
-
-  /* ✅ Navbar Styling */
-  .navbar {
-    background: #fff;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-    padding: 20px 10px; 
-    transition: padding 0.s ease, box-shadow 0.3s ease; 
+  .container, .content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-top: 40px;
   }
-
-  .navbar.shrink {
-    padding: 8px 10px;
-    box-shadow: 0 4px 12px rgba(23, 13, 206, 0.2);
+  h2, h3, h4 {
+    font-weight: 800;
+    color: #3b0a85;
+    letter-spacing: 1px;
   }
-
-  .nav-link {
-    font-weight: 500;
-    margin-right: 15px;
-    color: #333;
-    transition: all 0.3s ease;
-  }
-
-  .nav-link:hover {
-    background-color: #007bff;
-    color: white !important;
-    border-radius: 6px;
-    padding: 6px 12px;
-  }
-
-  .nav-link.active {
-    background-color: #3b0a85;
-    color: white !important;
-    border-radius: 6px;
-    /* padding: 6px 12px; */
-  }
-
-  /* ✅ Profile Image */
-  .dropdown-toggle img {
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid #ccc;
-    width: 40px;
-    height: 40px;
-  }
-
-  /* ✅ Card Summary Boxes */
   .card-summary {
-    border-radius: 16px;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
-    transition: transform 0.3s ease;
-    background-color: #fff;
+    border-radius: 1.5rem;
+    box-shadow: 0 6px 20px rgba(59,10,133,0.08);
+    background: #fff;
+    transition: transform 0.3s;
+    margin-bottom: 1.5rem;
   }
-
   .card-summary:hover {
-    transform: translateY(-4px);
+    transform: translateY(-4px) scale(1.03);
   }
-
   .card-summary .card-body h5 {
-    font-size: 16px;
+    font-size: 1.1rem;
     font-weight: 600;
     color: #666;
   }
-
   .card-summary .card-body h2 {
-    font-size: 28px;
+    font-size: 2rem;
     font-weight: bold;
-    color: #f2f0f6ff;
+    color: #3b0a85;
   }
-
-  /* ✅ Chart or Custom Card Containers */
   .card-box {
-    background: white;
-    border-radius: 16px;
-    padding: 20px;
-    box-shadow: 0 4px 12px rgba(248, 242, 242, 0.06);
-    margin-bottom: 20px;
+    background: #fff;
+    border-radius: 1.5rem;
+    padding: 2rem 1.5rem;
+    box-shadow: 0 4px 16px rgba(59,10,133,0.07);
+    margin-bottom: 2rem;
   }
-
-  /* ✅ Optional: Section Titles */
-  h2.section-title {
-    font-size: 24px;
+  table.table {
+    background: #fff;
+    border-radius: 1.2rem;
+    box-shadow: 0 2px 12px rgba(59,10,133,0.07);
+    overflow: hidden;
+  }
+  table.table th, table.table td {
+    vertical-align: middle;
+    font-size: 1.05rem;
+    padding: 0.85rem 0.7rem;
+  }
+  table.table thead th {
+    background: #3b0a85;
+    color: #fff;
+    border: none;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+  .btn-warning, .btn-danger {
+    border-radius: 1.2rem;
     font-weight: 600;
-    /* margin-bottom: 0px; */
-    color: #ffffff;
+    padding: 0.4rem 1.1rem;
+    font-size: 1rem;
   }
-  .nav-link.active {
-  background-color: #0606a8ff;
-  border-radius: 8px;
-  font-weight: bold;
-}
-.sidebar {
-  background: linear-gradient(to bottom, #ffffff, #f4f7ff);
-}
-.sidebar {
-  overflow-y: auto;
-}
-.sidebar-header img {
-  border: 2px solid #ccc;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-}
-
-  
-</style>
+  .btn-warning i, .btn-danger i {
+    margin-right: 0.3rem;
+  }
+  @media (max-width: 991px) {
+    .container, .content { padding-top: 20px; }
+    .card-box { padding: 1.2rem 0.5rem; }
+    .card-summary .card-body h2 { font-size: 1.3rem; }
+    table.table th, table.table td { font-size: 0.95rem; padding: 0.5rem 0.3rem; }
+  }
+  @media (max-width: 767px) {
+    .container, .content { padding-top: 10px; }
+    .card-summary, .card-box { border-radius: 1rem; }
+    .card-summary .card-body h2 { font-size: 1.1rem; }
+    h2, h3, h4 { font-size: 1.1rem; }
+  }
+  </style>
 
 <!-- Google Fonts for Modern Typography -->
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
@@ -255,25 +229,7 @@ $totalNoCancer = $no_cancer;
   </div>
 
     <ul class="nav flex-column px-3 pt-3">
-      <li class="nav-item mb-2">
-        <a class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'home.php' ? 'active text-primary font-weight-bold' : 'text-dark' ?>" href="home.php">
-          <i class="fas fa-home mr-2"></i> Home
-        </a>
-      </li>
-
-      <li class="nav-item mb-2">
-        <a class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'predict.php' ? 'active text-primary font-weight-bold' : 'text-dark' ?>" href="predict.php">
-          <i class="fas fa-microscope mr-2"></i> Prediction
-        </a>
-      </li>
-
-      <li class="nav-item mb-2">
-        <a class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'report.php' ? 'active text-primary font-weight-bold' : 'text-dark' ?>" href="report.php">
-          <i class="fas fa-file-medical mr-2"></i> Report
-        </a>
-      </li>
-
-      <?php if ($role !== 'admin' && $role !== 'small-admin' && $role !== 'small-admi'): ?>
+    <?php if ($role !== 'admin' && $role !== 'small-admin' && $role !== 'small-admi'): ?>
       <li class="nav-item mb-2">
         <a class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'analyze.php' ? 'active text-primary font-weight-bold' : 'text-dark' ?>" href="analyze.php">
           <i class="fas fa-chart-bar mr-2"></i> Dashboard
@@ -286,6 +242,19 @@ $totalNoCancer = $no_cancer;
           <i class="fas fa-users-cog mr-2"></i> My Users
         </a>
       </li>
+      <li class="nav-item mb-2">
+        <a class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'predict.php' ? 'active text-primary font-weight-bold' : 'text-dark' ?>" href="predict.php">
+          <i class="fas fa-microscope mr-2"></i> Prediction
+        </a>
+      </li>
+
+      <li class="nav-item mb-2">
+        <a class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'report.php' ? 'active text-primary font-weight-bold' : 'text-dark' ?>" href="report.php">
+          <i class="fas fa-file-medical mr-2"></i> Report
+        </a>
+      </li>
+
+      
 
       <!-- Profile Dropdown (Styled Section) -->
       <!-- Fixed Profile Collapse Section -->
