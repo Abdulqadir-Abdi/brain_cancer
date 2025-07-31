@@ -16,104 +16,49 @@ function has_valid_image($image_path) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Brain Cancer Detection</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
   <style>
-    :root {
-      --primary-color: #3b0a85;
-      --secondary-color: #ff8800;
-      --accent-color: #5f2db4;
-      --light-bg: #f8f9fa;
-      --dark-bg: #1a1a2e;
-      --text-dark: #333;
-      --text-light: #f8f9fa;
-      --success-color: #28a745;
-      --danger-color: #dc3545;
-      --info-color: #17a2b8;
-    }
-    
-    /* Base Styles */
     body, html {
       margin: 0;
       padding: 0;
       min-height: 100vh;
       font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, var(--light-bg) 60%, #e6e6fa 100%);
+      background: linear-gradient(135deg, #f8f9fa 60%, #e6e6fa 100%);
       scroll-behavior: smooth;
-      color: var(--text-dark);
     }
-    
-    /* Typography */
-    h1, h2, h3, h4, h5, h6 {
-      font-weight: 700;
-      color: var(--primary-color);
-    }
-    
-    .section-title {
-      font-size: 2.2rem;
-      margin-bottom: 3rem;
-      text-align: center;
-      position: relative;
-      padding-bottom: 1rem;
-    }
-    
-    .section-title::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 80px;
-      height: 4px;
-      background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-      border-radius: 2px;
-    }
-    
-    /* Navigation */
     .navbar {
       background: #fff;
       box-shadow: 0 4px 16px rgba(59,10,133,0.07);
       padding: 1rem 2rem;
       border-bottom: 2px solid #f3f3f3;
     }
-    
     .navbar-brand {
       font-weight: 700;
-      color: var(--primary-color) !important;
+      color: #3b0a85 !important;
       letter-spacing: 1px;
       font-size: 1.5rem;
-      display: flex;
-      align-items: center;
     }
-    
-    .navbar-brand i {
-      margin-right: 0.5rem;
-    }
-    
     .nav-link {
       font-weight: 500;
       margin-right: 1rem;
-      color: var(--text-dark) !important;
-      transition: all 0.2s;
+      color: #333 !important;
+      transition: color 0.2s;
       position: relative;
     }
-    
     .nav-link.active, .nav-link:hover {
-      color: var(--primary-color) !important;
+      color: #3b0a85 !important;
     }
-    
     .nav-link.active::after, .nav-link:hover::after {
       content: '';
       display: block;
       width: 60%;
       height: 2px;
-      background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+      background: linear-gradient(90deg, #3b0a85, #ff8800);
       margin: 0.2rem auto 0 auto;
       border-radius: 2px;
     }
-    
-    /* Hero Section */
     .hero {
       position: relative;
       background-image: url('Home image.jpg');
@@ -127,7 +72,6 @@ function has_valid_image($image_path) {
       text-align: center;
       overflow: hidden;
     }
-    
     .hero::before {
       content: '';
       position: absolute;
@@ -136,17 +80,15 @@ function has_valid_image($image_path) {
       z-index: 1;
       animation: heroFadeIn 1.2s;
     }
-    
     @keyframes heroFadeIn {
       from { opacity: 0; }
       to { opacity: 1; }
     }
-    
     .hero-content {
       position: relative;
       z-index: 2;
       background: rgba(255,255,255,0.98);
-      color: var(--text-dark);
+      color: #222;
       padding: 3.5rem 2.5rem;
       border-radius: 2rem;
       max-width: 650px;
@@ -154,14 +96,12 @@ function has_valid_image($image_path) {
       box-shadow: 0 8px 32px rgba(59,10,133,0.13);
       animation: fadeInUp 1.2s;
     }
-    
     @keyframes fadeInUp {
       from { opacity: 0; transform: translateY(40px); }
       to { opacity: 1; transform: translateY(0); }
     }
-    
     .anthem {
-      background: linear-gradient(90deg, var(--secondary-color), var(--primary-color));
+      background: linear-gradient(90deg, #ff8800, #3b0a85);
       color: #fff;
       font-weight: bold;
       padding: 0.5rem 1.5rem;
@@ -173,46 +113,39 @@ function has_valid_image($image_path) {
       box-shadow: 0 2px 8px rgba(59,10,133,0.08);
       animation: fadeIn 2s;
     }
-    
     @keyframes fadeIn {
       from { opacity: 0; }
       to { opacity: 1; }
     }
-    
     .hero-content h2 {
       font-weight: 800;
       margin-bottom: 1.2rem;
-      color: var(--primary-color);
+      color: #3b0a85;
       font-size: 2.5rem;
       letter-spacing: 1px;
     }
-    
     .hero-content p {
       color: #555;
       font-size: 1.15rem;
       margin-bottom: 2.2rem;
     }
-    
     .btn-purple {
-      background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+      background: linear-gradient(90deg, #3b0a85, #5f2db4);
       color: #fff;
       border: none;
       font-size: 1.15rem;
       font-weight: 700;
       padding: 0.85rem 2.7rem;
       border-radius: 2rem;
-      transition: all 0.3s;
+      transition: background 0.3s, transform 0.2s;
       box-shadow: 0 2px 8px rgba(59,10,133,0.10);
       letter-spacing: 1px;
     }
-    
     .btn-purple:hover {
-      background: linear-gradient(90deg, var(--accent-color), var(--primary-color));
+      background: linear-gradient(90deg, #5f2db4, #3b0a85);
       color: #fff;
       transform: translateY(-2px) scale(1.04);
-      box-shadow: 0 4px 12px rgba(59,10,133,0.15);
     }
-    
     .scroll-down {
       position: absolute;
       bottom: 2.5rem;
@@ -225,183 +158,122 @@ function has_valid_image($image_path) {
       cursor: pointer;
       opacity: 0.85;
     }
-    
     @keyframes bounce {
       0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
       40% { transform: translateX(-50%) translateY(-12px); }
       60% { transform: translateX(-50%) translateY(-6px); }
     }
-    
-    /* Card System - Updated */
-    .card {
-      border: none;
-      border-radius: 1rem;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-      transition: all 0.3s ease;
-      overflow: hidden;
-      background: #fff;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-    }
-    
-    .card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 12px 24px rgba(59,10,133,0.15);
-    }
-    
-    .card-img-container {
-      position: relative;
-      width: 100%;
-      height: 250px; /* Fixed height for consistency */
-      overflow: hidden;
-    }
-    
-    .card-img-container.square {
-      height: 300px; /* Slightly taller for team cards */
-    }
-    
-    .card-img, .card-img-top {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.5s ease;
-    }
-    
-    .card:hover .card-img,
-    .card:hover .card-img-top {
-      transform: scale(1.05);
-    }
-    
-    .card-header {
-      background-color: var(--primary-color);
-      color: white;
-      padding: 1rem;
-      font-weight: 600;
+    .section-title {
+      font-weight: 800;
+      color: #3b0a85;
+      margin-bottom: 2.5rem;
       text-align: center;
-      border-bottom: none;
+      letter-spacing: 1px;
     }
     
-    .card-header.bg-danger { background-color: var(--danger-color); }
-    .card-header.bg-success { background-color: var(--success-color); }
-    .card-header.bg-primary { background-color: var(--primary-color); }
-    .card-header.bg-info { background-color: var(--info-color); }
     
-    .card-body {
-      padding: 1.5rem;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-    }
-    
-    .card-title {
-      font-weight: 700;
-      color: var(--primary-color);
-      margin-bottom: 0.75rem;
-    }
-    
-    .card-text {
-      color: #555;
-      margin-bottom: 1rem;
-      flex-grow: 1;
-    }
-    
-    /* Team Cards */
-    .team-card .card-img-container {
-      height: 300px; /* Square images for team */
-    }
-    
-    .team-card .card-body {
-      text-align: center;
-    }
-    
-    .team-card .card-title {
-      font-size: 1.25rem;
-      margin-bottom: 0.5rem;
-    }
-    
-    .team-card .social-icons {
-      margin-top: 1rem;
-    }
-    
-    .team-card .social-icons a {
-      color: var(--primary-color);
-      margin: 0 0.5rem;
-      font-size: 1.2rem;
-      opacity: 0.7;
-      transition: all 0.2s;
-    }
-    
-    .team-card .social-icons a:hover {
-      color: var(--secondary-color);
-      opacity: 1;
-      transform: translateY(-2px);
-    }
-    
-    /* Footer */
+
+
+
+
     .footer {
-      background: var(--dark-bg);
-      color: var(--text-light);
-      padding: 3rem 0 1.5rem;
-      margin-top: 5rem;
+      background: #3b0a85;
+      color: #fff;
+      padding: 2rem 0 1rem 0;
+      margin-top: 3rem;
+      border-top-left-radius: 2rem;
+      border-top-right-radius: 2rem;
+      box-shadow: 0 -2px 16px rgba(59,10,133,0.07);
+    }
+    .footer a { color: #fff; opacity: 0.8; transition: opacity 0.2s; }
+    .footer a:hover { opacity: 1; }
+    .team-card img {
+      height: 180px;
+      object-fit: cover;
+      border-radius: 1rem 1rem 0 0;
+      filter: grayscale(10%);
+      transition: filter 0.3s, transform 0.3s;
     }
     
-    .footer h5 {
-      font-weight: 600;
-      margin-bottom: 1.2rem;
-      display: flex;
-      align-items: center;
-    }
-    
-    .footer h5 i {
-      margin-right: 0.7rem;
-      color: var(--secondary-color);
-    }
-    
-    .footer a {
-      color: var(--text-light);
-      opacity: 0.8;
-      transition: all 0.2s;
-      text-decoration: none;
-    }
-    
-    .footer a:hover {
-      opacity: 1;
-      color: var(--secondary-color);
-    }
-    
-    .footer .social-icons a {
-      font-size: 1.3rem;
-      margin-right: 1rem;
-    }
-    
-    /* Responsive Adjustments */
-    @media (max-width: 767px) {
-      .hero-content {
-        padding: 2rem 1.5rem;
-        margin: 1rem;
-      }
-      
-      .section-title {
-        font-size: 1.8rem;
-      }
-      
-      .card-img-container {
-        height: 200px; /* Adjusted for mobile */
-      }
-      
-      .team-card .card-img-container {
-        height: 250px; /* Adjusted for mobile */
-      }
-      
-      .footer {
-        text-align: center;
-      }
-      
-      .footer h5 {
-        justify-content: center;
-      }
-    }
+   
+
+
+
+/* Team images */
+.card-img-top {
+  width: 100%;
+  height: 280px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 0.5rem 0.5rem 0 0;
+}
+
+..card {
+  height: 100%;
+  min-height: 360px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: none;
+  border-radius: 1rem;
+  overflow: hidden;
+  background-color: #fff;
+  transition: all 0.2s ease-in-out;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+}
+
+.card-header {
+  font-weight: 600;
+  font-size: 16px;
+  text-align: center;
+  border-bottom: none;
+  padding: 0.75rem;
+}
+
+.card-body {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  flex-grow: 1;
+}
+
+.fixed-image {
+  width: 100%;
+  height: 220px;
+  object-fit: contain;
+  object-position: center;
+  border-radius: 10px;
+  background-color: #f8f8f8;
+  padding: 6px;
+  display: block;
+  margin: 0 auto;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.card-body p {
+  font-size: 14px;
+  color: #555;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.section-title {
+  font-size: 1.75rem;
+  font-weight: bold;
+  color: #3b0a85;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+
+
+
   </style>
 </head>
 <body>
@@ -409,7 +281,7 @@ function has_valid_image($image_path) {
 <!-- Navbar for logged-in users -->
 <nav class="navbar navbar-expand-lg navbar-light sticky-top">
   <div class="container-fluid">
-    <a class="navbar-brand" href="home.php"><i class="fas fa-brain"></i>Brain Cancer Detection</a>
+    <a class="navbar-brand" href="home.php"><i class="fas fa-brain me-2"></i>Brain Cancer Detection</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -441,7 +313,7 @@ function has_valid_image($image_path) {
 <!-- Navbar for guests (only Login button) -->
 <nav class="navbar navbar-expand-lg navbar-light sticky-top">
   <div class="container-fluid">
-    <a class="navbar-brand" href="home.php"><i class="fas fa-brain"></i>Brain Cancer Detection</a>
+    <a class="navbar-brand" href="home.php"><i class="fas fa-brain me-2"></i>Brain Cancer Detection</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -453,34 +325,34 @@ function has_valid_image($image_path) {
   </div>
 </nav>
 <?php endif; ?>
-
 <!-- Hero Section -->
 <section class="hero d-flex align-items-center justify-content-center">
   <div class="hero-content shadow-lg">
     <div class="anthem mb-2">LISTEN TO OUR NEW ANTHEM</div>
-    <h2>Advanced Brain Cancer Detection Platform</h2>
-    <p>Our AI-powered system analyzes MRI scans to detect early signs of brain cancer with high accuracy, assisting medical professionals in diagnosis and treatment planning.</p>
+    <h2>Find the most Exciting Online Brain Cancer Prediction</h2>
+    <p>This platform uses Machine Learning to detect brain cancer from MRI images, helping doctors with early diagnosis and treatment.</p>
     <a href="predict.php" class="btn btn-purple">Start Prediction</a>
   </div>
   <div class="scroll-down">
     <a href="#about-section"><i class="fas fa-chevron-down"></i></a>
   </div>
 </section>
-
 <!-- About Section -->
-<section class="container my-5 py-5" id="about-section">
+<section class="container my-5" id="about-section">
   <div class="row justify-content-center">
     <div class="col-lg-10">
       <div class="card shadow-lg border-0">
         <div class="card-body p-5 text-center">
           <h2 class="section-title">About This Project</h2>
           <p class="fs-5 text-muted mb-4">
-            This innovative platform combines cutting-edge machine learning with medical imaging to revolutionize brain cancer detection.
-            Our system provides rapid analysis of MRI scans, delivering results with clinical-grade accuracy to support healthcare professionals.
+            This project is a web-based brain cancer detection system powered by machine learning.<br>
+            It analyzes MRI images uploaded by users to predict the presence of cancer.<br>
+            The system provides instant feedback using a pre-trained deep learning model.
           </p>
           <p class="fs-5 text-muted">
-            The platform offers comprehensive insights including tumor classification, growth patterns, and risk assessment.
-            Designed for both clinical and research use, it enables early intervention and improves patient outcomes through advanced AI diagnostics.
+            Users can view prediction summaries, gender-based insights, and age range statistics.<br>
+            The dashboard includes real-time charts and an option to export results as PDF.<br>
+            It is designed to assist doctors, researchers, and patients in early diagnosis.
           </p>
         </div>
       </div>
@@ -488,225 +360,172 @@ function has_valid_image($image_path) {
   </div>
 </section>
 
-<!-- Sample Images Section -->
-<section class="container py-5">
-  <h2 class="section-title">MRI Scan Examples: Cancer vs. Healthy</h2>
+<div class="container py-5">
+  <h2 class="section-title text-center mb-4">Sample Dataset Images: Cancer and No-Cancer MRI Scans</h2>
 
-  <div class="row g-4 justify-content-center">
-    <!-- Cancer Images -->
+  <div class="row g-4 mb-4 justify-content-center">
+    <!-- Cancer Image 1 -->
     <div class="col-md-6 col-lg-5">
-      <div class="card h-100">
-        <div class="card-img-container">
-          <img src="images/Yes1.jpg" alt="Cancer MRI Scan" class="card-img">
-        </div>
-        <div class="card-header bg-danger">Cancerous Tumor</div>
-        <div class="card-body text-center">
-          <p class="card-text">This MRI clearly shows a malignant brain tumor with irregular borders and contrast enhancement.</p>
+      <div class="card h-100 shadow-sm">
+        <div class="card-header bg-danger text-white">Cancer Image</div>
+        <div class="card-body">
+          <img src="images/Yes1.jpg" alt="Cancer MRI 1" class="fixed-image">
+          <p>This MRI scan shows evidence of a brain cancer.</p>
         </div>
       </div>
     </div>
 
+    <!-- Cancer Image 2 -->
     <div class="col-md-6 col-lg-5">
-      <div class="card h-100">
-        <div class="card-img-container">
-          <img src="images/Yes2.jpg" alt="Cancer MRI Scan" class="card-img">
-        </div>
-        <div class="card-header bg-danger">Advanced Glioma</div>
-        <div class="card-body text-center">
-          <p class="card-text">Example of a high-grade glioma showing mass effect and surrounding edema.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Healthy Images -->
-    <div class="col-md-6 col-lg-5 mt-4">
-      <div class="card h-100">
-        <div class="card-img-container">
-          <img src="images/No1.jpg" alt="Healthy MRI Scan" class="card-img">
-        </div>
-        <div class="card-header bg-success">Normal Brain Scan</div>
-        <div class="card-body text-center">
-          <p class="card-text">Healthy MRI showing normal brain anatomy without any pathological findings.</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-md-6 col-lg-5 mt-4">
-      <div class="card h-100">
-        <div class="card-img-container">
-          <img src="images/No2.jpg" alt="Healthy MRI Scan" class="card-img">
-        </div>
-        <div class="card-header bg-success">Normal Variant</div>
-        <div class="card-body text-center">
-          <p class="card-text">Another example of a normal MRI with typical anatomical structures clearly visible.</p>
+      <div class="card h-100 shadow-sm">
+        <div class="card-header bg-danger text-white">Cancer Image</div>
+        <div class="card-body">
+          <img src="images/Yes2.jpg" alt="Cancer MRI 2" class="fixed-image">
+          <p>Another MRI scan with visible cancerous regions.</p>
         </div>
       </div>
     </div>
   </div>
-</section>
-
-<!-- Data Visualization Section -->
-<section class="container py-5">
-  <h2 class="section-title">Dataset & Model Performance</h2>
 
   <div class="row g-4 justify-content-center">
+    <!-- No-Cancer Image 1 -->
     <div class="col-md-6 col-lg-5">
-      <div class="card h-100">
-        <div class="card-img-container">
-          <img src="images/pie_chart.png" alt="Dataset Distribution" class="card-img">
-        </div>
-        <div class="card-header bg-primary">Dataset Composition</div>
-        <div class="card-body text-center">
-          <p class="card-text">Our curated dataset contains thousands of validated MRI scans with balanced representation of pathological and normal cases.</p>
+      <div class="card h-100 shadow-sm">
+        <div class="card-header bg-success text-white">No-Cancer Image</div>
+        <div class="card-body">
+          <img src="images/No1.jpg" alt="No-Cancer MRI 1" class="fixed-image">
+          <p>This MRI scan appears normal with no signs of brain cancer.</p>
         </div>
       </div>
     </div>
 
+    <!-- No-Cancer Image 2 -->
     <div class="col-md-6 col-lg-5">
-      <div class="card h-100">
-        <div class="card-img-container">
-          <img src="images/accuracy_chart.png" alt="Model Accuracy" class="card-img">
-        </div>
-        <div class="card-header bg-info">Model Performance</div>
-        <div class="card-body text-center">
-          <p class="card-text">Comparative analysis showing our deep learning model outperforming traditional approaches in accuracy and specificity.</p>
+      <div class="card h-100 shadow-sm">
+        <div class="card-header bg-success text-white">No-Cancer Image</div>
+        <div class="card-body">
+          <img src="images/No2.jpg" alt="No-Cancer MRI 2" class="fixed-image">
+          <p>Healthy brain MRI with no detected abnormalities.</p>
         </div>
       </div>
     </div>
   </div>
-</section>
+</div>
 
-<!-- Team Section -->
-<section class="container py-5">
-  <h2 class="section-title">Our Team</h2>
-
+<!-- Dataset Summary -->
+<div class="container py-5">
+  <h2 class="section-title text-center mb-4">Dataset Distribution & Model Accuracy</h2>
   <div class="row g-4 justify-content-center">
-    <div class="col-md-6 col-lg-3">
-      <div class="card team-card h-100">
-        <div class="card-img-container square">
-          <img src="images/Abdirahman.jpg" class="card-img-top" alt="Eng Abdirahman Ahmed Mohamed">
-        </div>
+
+    <!-- Pie Chart -->
+    <div class="col-md-6 col-lg-5">
+      <div class="card h-100 shadow-sm">
+        <div class="card-header bg-primary text-white">Dataset Distribution</div>
         <div class="card-body">
-          <h5 class="card-title">Eng Abdirahman Ahmed Mohamed</h5>
-          <p class="card-text">Lead AI Engineer</p>
-          <div class="social-icons">
-            <a href="#"><i class="fab fa-linkedin"></i></a>
-            <a href="#"><i class="fab fa-github"></i></a>
-            <a href="#"><i class="fas fa-envelope"></i></a>
-          </div>
+          <img src="images/pie_chart.png" alt="Dataset Distribution" class="fixed-image">
+          <p>This chart shows the count of Cancer and No-Cancer MRI images in the dataset.</p>
         </div>
       </div>
     </div>
 
-    <div class="col-md-6 col-lg-3">
-      <div class="card team-card h-100">
-        <div class="card-img-container square">
-          <img src="images/abdalle.jpg" class="card-img-top" alt="Eng Abdulkadir Abdi Adan">
-        </div>
+    <!-- Accuracy Chart -->
+    <div class="col-md-6 col-lg-5">
+      <div class="card h-100 shadow-sm">
+        <div class="card-header bg-info text-white">Model Accuracy Comparison</div>
         <div class="card-body">
-          <h5 class="card-title">Eng Abdulkadir Abdi Adan</h5>
-          <p class="card-text">Backend Developer</p>
-          <div class="social-icons">
-            <a href="#"><i class="fab fa-linkedin"></i></a>
-            <a href="#"><i class="fab fa-github"></i></a>
-            <a href="#"><i class="fas fa-envelope"></i></a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-md-6 col-lg-3">
-      <div class="card team-card h-100">
-        <div class="card-img-container square">
-          <img src="images/Libaan.jpg" class="card-img-top" alt="Eng Liban Osman Ali">
-        </div>
-        <div class="card-body">
-          <h5 class="card-title">Eng Liban Osman Ali</h5>
-          <p class="card-text">Frontend Developer</p>
-          <div class="social-icons">
-            <a href="#"><i class="fab fa-linkedin"></i></a>
-            <a href="#"><i class="fab fa-github"></i></a>
-            <a href="#"><i class="fas fa-envelope"></i></a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-md-6 col-lg-3">
-      <div class="card team-card h-100">
-        <div class="card-img-container square">
-          <img src="images/Moha.jpg" class="card-img-top" alt="Eng Mohamed Isse Mohamed">
-        </div>
-        <div class="card-body">
-          <h5 class="card-title">Eng Mohamed Isse Mohamed</h5>
-          <p class="card-text">Data Scientist</p>
-          <div class="social-icons">
-            <a href="#"><i class="fab fa-linkedin"></i></a>
-            <a href="#"><i class="fab fa-github"></i></a>
-            <a href="#"><i class="fas fa-envelope"></i></a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Footer -->
-<footer class="footer">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-3 mb-4">
-        <h5><i class="far fa-clock"></i> Working Hours</h5>
-        <p>Monday - Friday: 7:30 AM - 4:30 PM</p>
-        <p>Weekends: Closed</p>
-      </div>
-
-      <div class="col-md-3 mb-4">
-        <h5><i class="far fa-envelope"></i> Contact Us</h5>
-        <p><a href="mailto:info@braincancerdetection.com">info@braincancerdetection.com</a></p>
-        <p><a href="mailto:support@braincancerdetection.com">support@braincancerdetection.com</a></p>
-      </div>
-
-      <div class="col-md-3 mb-4">
-        <h5><i class="fas fa-phone-alt"></i> Phone</h5>
-        <p><a href="tel:+1234567890">+1 (234) 567-890</a></p>
-        <p><a href="tel:+1987654321">+1 (987) 654-321</a></p>
-      </div>
-
-      <div class="col-md-3 mb-4">
-        <h5><i class="fas fa-share-alt"></i> Follow Us</h5>
-        <div class="social-icons">
-          <a href="#"><i class="fab fa-facebook"></i></a>
-          <a href="#"><i class="fab fa-twitter"></i></a>
-          <a href="#"><i class="fab fa-linkedin"></i></a>
-          <a href="#"><i class="fab fa-instagram"></i></a>
-          <a href="#"><i class="fab fa-youtube"></i></a>
+          <img src="images/accuracy_chart.png" alt="Model Accuracy" class="fixed-image">
+          <p>This bar chart compares accuracy of different ML models on brain MRI classification.</p>
         </div>
       </div>
     </div>
     
-    <div class="row mt-4">
-      <div class="col-12 text-center">
-        <p class="mb-0">&copy; <?php echo date('Y'); ?> Brain Cancer Detection System. All rights reserved.</p>
+  </div>
+</div>
+
+
+
+<!-- Team Cards Section -->
+<div class="container mt-5">
+  <h4 class="text-center text-primary mb-4 fw-bold">About Us</h4>
+  <div class="row justify-content-center">
+    <div class="col-md-6 col-lg-3 mb-4">
+      <div class="card h-100 shadow-sm">
+        <img src="images/Abdirahman.jpg" class="card-img-top" alt="Eng Abdirahman Ahmed Mohamed">
+        <div class="card-body">
+          <h5 class="card-title">Eng Abdirahman Ahmed Mohamed</h5>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-3 mb-4">
+      <div class="card h-100 shadow-sm">
+        <img src="images/abdalle.jpg" class="card-img-top" alt="Eng Abdulkadir Abdi Adan">
+        <div class="card-body">
+          <h5 class="card-title">Eng Abdulkadir Abdi Adan</h5>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-3 mb-4">
+      <div class="card h-100 shadow-sm">
+        <img src="images/Libaan.jpg" class="card-img-top" alt="Eng Liban Osman Ali">
+        <div class="card-body">
+          <h5 class="card-title">Eng Liban Osman Ali</h5>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-3 mb-4">
+      <div class="card h-100 shadow-sm">
+        <img src="images/Moha.jpg" class="card-img-top" alt="Eng Mohamed Isse Mohamed">
+        <div class="card-body">
+          <h5 class="card-title">Eng Mohamed Isse Mohamed</h5>
+        </div>
       </div>
     </div>
   </div>
-</footer>
+</div>
 
+<!-- Footer Section -->
+<footer class="bg-dark text-light p-4 mt-5">
+  <div class="container">
+    <div class="row text-center text-md-left">
+      
+      <div class="col-md-3 mb-3">
+        <h5><i class="far fa-clock mr-2"></i>Timing</h5>
+        <p>07:30 am to 16:30 pm</p>
+      </div>
+
+      <div class="col-md-3 mb-3">
+        <h5><i class="far fa-envelope mr-2"></i>Email</h5>
+        <p>info@gmail.com</p>
+      </div>
+
+      <div class="col-md-3 mb-3">
+        <h5><i class="fas fa-phone-alt mr-2"></i>Phone</h5>
+        <p>7896541239</p>
+      </div>
+
+      <div class="col-md-3 mb-3">
+        <h5><i class="fas fa-share-alt mr-2"></i>Socials</h5>
+        <a href="#"><i class="fab fa-facebook fa-lg mr-3"></i></a>
+        <a href="#"><i class="fab fa-twitter fa-lg mr-3"></i></a>
+        <a href="#"><i class="fab fa-instagram fa-lg mr-3"></i></a>
+        <a href="#"><i class="fab fa-youtube fa-lg"></i></a>
+      </div>
+
+    </div>
+  </div>
+</footer>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
 function confirmAccountDelete() {
   Swal.fire({
-    title: 'Confirm Account Deletion',
-    text: "This will permanently remove your account and all associated data. This action cannot be undone.",
+    title: 'Are you sure?',
+    text: "This will permanently delete your account.",
     icon: 'warning',
     showCancelButton: true,
-    confirmButtonColor: '#dc3545',
+    confirmButtonColor: '#d33',
     cancelButtonColor: '#6c757d',
-    confirmButtonText: 'Yes, delete my account',
-    cancelButtonText: 'Cancel',
-    reverseButtons: true
+    confirmButtonText: 'Yes, delete it!'
   }).then((result) => {
     if (result.isConfirmed) {
       window.location.href = 'delete_account.php';
