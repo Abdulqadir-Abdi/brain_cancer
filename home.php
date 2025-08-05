@@ -444,7 +444,7 @@ function has_valid_image($image_path) {
 
 
 
-<!-- Team Cards Section -->
+<!-- Team Cards Section
 <div class="container mt-5">
   <h4 class="text-center text-primary mb-4 fw-bold">About Us</h4>
   <div class="row justify-content-center">
@@ -481,36 +481,66 @@ function has_valid_image($image_path) {
       </div>
     </div>
   </div>
-</div>
+</div> -->
 
 <!-- Footer Section -->
-<footer class="bg-dark text-light p-4 mt-5">
+<footer class="bg-dark text-light pt-5 pb-4">
   <div class="container">
-    <div class="row text-center text-md-left">
+    <div class="row">
       
-      <div class="col-md-3 mb-3">
-        <h5><i class="far fa-clock mr-2"></i>Timing</h5>
-        <p>07:30 am to 16:30 pm</p>
+      <!-- Timing Section -->
+      <div class="col-md-3 mb-4 mb-md-0">
+        <div class="d-flex align-items-center mb-3">
+          <i class="far fa-clock fa-lg mr-3 text-primary"></i>
+          <h5 class="mb-0">Opening Hours</h5>
+        </div>
+        <p class="ps-5">Monday - Friday: 7:30 AM - 4:30 PM</p>
+        <p class="ps-5">Saturday: 9:00 AM - 2:00 PM</p>
       </div>
 
-      <div class="col-md-3 mb-3">
-        <h5><i class="far fa-envelope mr-2"></i>Email</h5>
-        <p>info@gmail.com</p>
+      <!-- Email Section -->
+      <div class="col-md-3 mb-4 mb-md-0">
+        <div class="d-flex align-items-center mb-3">
+          <i class="far fa-envelope fa-lg mr-3 text-primary"></i>
+          <h5 class="mb-0">Email Us</h5>
+        </div>
+        <p class="ps-5">
+          <a href="mailto:info@gmail.com" class="text-light text-decoration-none">info@gmail.com</a>
+        </p>
       </div>
 
-      <div class="col-md-3 mb-3">
-        <h5><i class="fas fa-phone-alt mr-2"></i>Phone</h5>
-        <p>7896541239</p>
+      <!-- Phone Section -->
+      <div class="col-md-3 mb-4 mb-md-0">
+        <div class="d-flex align-items-center mb-3">
+          <i class="fas fa-phone-alt fa-lg mr-3 text-primary"></i>
+          <h5 class="mb-0">Call Us</h5>
+        </div>
+        <p class="ps-5">
+          <a href="tel:7896541239" class="text-light text-decoration-none">(789) 654-1239</a>
+        </p>
       </div>
 
-      <div class="col-md-3 mb-3">
-        <h5><i class="fas fa-share-alt mr-2"></i>Socials</h5>
-        <a href="#"><i class="fab fa-facebook fa-lg mr-3"></i></a>
-        <a href="#"><i class="fab fa-twitter fa-lg mr-3"></i></a>
-        <a href="#"><i class="fab fa-instagram fa-lg mr-3"></i></a>
-        <a href="#"><i class="fab fa-youtube fa-lg"></i></a>
+      <!-- Social Media Section -->
+      <div class="col-md-3">
+        <div class="d-flex align-items-center mb-3">
+          <i class="fas fa-share-alt fa-lg mr-3 text-primary"></i>
+          <h5 class="mb-0">Follow Us</h5>
+        </div>
+        <div class="ps-5">
+          <a href="#" class="text-light me-3"><i class="fab fa-facebook-f fa-lg"></i></a>
+          <a href="#" class="text-light me-3"><i class="fab fa-twitter fa-lg"></i></a>
+          <a href="#" class="text-light me-3"><i class="fab fa-instagram fa-lg"></i></a>
+          <a href="#" class="text-light"><i class="fab fa-youtube fa-lg"></i></a>
+        </div>
       </div>
 
+    </div>
+    
+    <!-- Copyright Section -->
+    <div class="row mt-4 pt-3 border-top border-secondary">
+      <div class="col-md-12 text-center">
+        <p class="mb-0 text-muted">&copy; 2023 Your Company Name. All rights reserved.</p>
+      </div>
     </div>
   </div>
 </footer>

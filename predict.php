@@ -302,7 +302,7 @@ if ($user_row = $user_result->fetch_assoc()) {
       <?php elseif (in_array($role, ['small-admin', 'small-admi'])): ?>
         <li class="nav-item">
           <a class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'dashboard.php' ? 'active' : '' ?>" href="dashboard.php">
-            <i class="fas fa-user-friends"></i> My Users
+            <i class="fas fa-user-friends"></i> Dashboard
           </a>
         </li>
       <?php endif; ?>
@@ -318,6 +318,11 @@ if ($user_row = $user_result->fetch_assoc()) {
           <i class="fas fa-file-medical"></i> Report
         </a>
       </li>
+
+      <li class="nav-item">
+        <a class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'add_user.php' ? 'active' : '' ?>" href="add_user.php">
+          <i class="fas fa-file-medical"></i> user manegment
+        </a>
     </ul>
     
     <!-- Profile Section -->

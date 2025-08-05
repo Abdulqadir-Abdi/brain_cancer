@@ -76,9 +76,10 @@ $search_query = !empty($filter_sql) ? "WHERE " . implode(" AND ", $filter_sql) :
 $query = "SELECT * FROM predictions $search_query ORDER BY created_at DESC";
 $result = $conn->query($query);
 
-// Handle delete action
-if (isset($_GET['delete'])) {
+// Handle delete action (only for admin and small-admi roles)
+if (isset($_GET['delete']) && in_array($role, ['admin', 'small-admin', 'small-admi'])) {
     $id = intval($_GET['delete']);
+    
     // Verify user has permission to delete this record
     $check_sql = "SELECT user_email FROM predictions WHERE id = $id";
     $check_result = $conn->query($check_sql);
@@ -92,8 +93,6 @@ if (isset($_GET['delete'])) {
         } elseif ($role === 'small-admin' || $role === 'small-admi') {
             $check_user = $conn->query("SELECT email FROM users WHERE email = '{$prediction['user_email']}' AND managed_by = '$admin_code'");
             $can_delete = ($check_user->num_rows > 0) || ($prediction['user_email'] === $user_email);
-        } else {
-            $can_delete = ($prediction['user_email'] === $user_email);
         }
         
         if ($can_delete) {
@@ -158,7 +157,6 @@ if (isset($_GET['export']) && $_GET['export'] == 'excel') {
       color: var(--dark);
     }
     
-    /* Sidebar styles */
     .sidebar {
       width: 280px;
       min-height: 100vh;
@@ -212,14 +210,12 @@ if (isset($_GET['export']) && $_GET['export'] == 'excel') {
       border: 3px solid white;
     }
     
-    /* Main content area */
     .main-content {
       margin-left: 280px;
       padding: 2rem;
       background-color: transparent;
     }
     
-    /* Report container */
     .report-container {
       background: white;
       border-radius: var(--radius-lg);
@@ -239,7 +235,6 @@ if (isset($_GET['export']) && $_GET['export'] == 'excel') {
       margin-bottom: 0;
     }
     
-    /* Filter section */
     .filter-section {
       padding: 1.5rem;
       background: white;
@@ -264,7 +259,6 @@ if (isset($_GET['export']) && $_GET['export'] == 'excel') {
       box-shadow: 0 0 0 0.25rem rgba(59, 10, 133, 0.25);
     }
     
-    /* Table styling */
     .table-responsive {
       padding: 1.5rem;
     }
@@ -289,7 +283,6 @@ if (isset($_GET['export']) && $_GET['export'] == 'excel') {
       background-color: rgba(59, 10, 133, 0.05);
     }
     
-    /* Badge styling */
     .badge-cancer {
       background-color: rgba(220, 53, 69, 0.1);
       color: var(--danger);
@@ -306,7 +299,6 @@ if (isset($_GET['export']) && $_GET['export'] == 'excel') {
       border-radius: var(--radius);
     }
     
-    /* Button styling */
     .btn-action {
       border-radius: var(--radius);
       font-weight: 600;
@@ -343,7 +335,6 @@ if (isset($_GET['export']) && $_GET['export'] == 'excel') {
       transition: all 0.3s;
     }
     
-    /* Empty state */
     .empty-state {
       padding: 3rem 0;
       text-align: center;
@@ -355,7 +346,6 @@ if (isset($_GET['export']) && $_GET['export'] == 'excel') {
       margin-bottom: 1rem;
     }
     
-    /* Responsive adjustments */
     @media (max-width: 992px) {
       .sidebar {
         width: 100%;
@@ -410,7 +400,7 @@ if (isset($_GET['export']) && $_GET['export'] == 'excel') {
       <?php elseif (in_array($role, ['small-admin', 'small-admi'])): ?>
         <li class="nav-item">
           <a class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'dashboard.php' ? 'active' : '' ?>" href="dashboard.php">
-            <i class="fas fa-user-friends"></i> My Users
+            <i class="fas fa-user-friends"></i> Dashboard
           </a>
         </li>
       <?php endif; ?>
@@ -424,6 +414,12 @@ if (isset($_GET['export']) && $_GET['export'] == 'excel') {
       <li class="nav-item">
         <a class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'report.php' ? 'active' : '' ?>" href="report.php">
           <i class="fas fa-file-medical"></i> Report
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'add_user.php' ? 'active' : '' ?>" href="add_user.php">
+          <i class="fas fa-file-medical"></i> user manegment
         </a>
       </li>
     </ul>
@@ -537,9 +533,11 @@ if (isset($_GET['export']) && $_GET['export'] == 'excel') {
                   <a href="update.php?id=<?= $row['id'] ?>" class="btn btn-sm btn-action btn-edit">
                     <i class="fas fa-edit"></i> Edit
                   </a>
-                  <a href="report.php?delete=<?= $row['id'] ?>" class="btn btn-sm btn-action btn-delete" onclick="return confirmDelete(<?= $row['id'] ?>)">
-                    <i class="fas fa-trash-alt"></i> Delete
-                  </a>
+                  <?php if (in_array($role, ['admin', 'small-admin', 'small-admi'])): ?>
+                    <a href="report.php?delete=<?= $row['id'] ?>" class="btn btn-sm btn-action btn-delete" onclick="return confirmDelete(<?= $row['id'] ?>)">
+                      <i class="fas fa-trash-alt"></i> Delete
+                    </a>
+                  <?php endif; ?>
                 </td>
               </tr>
               <?php endwhile; ?>
@@ -596,7 +594,7 @@ if (isset($_GET['export']) && $_GET['export'] == 'excel') {
       const rows = [];
       
       document.querySelectorAll("#reportTable tbody tr").forEach(tr => {
-        if (tr.cells.length >= 6) { // Ensure we have enough cells
+        if (tr.cells.length >= 6) {
           const row = [
             tr.cells[0].innerText,
             tr.cells[1].innerText,

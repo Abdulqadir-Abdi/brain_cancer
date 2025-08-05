@@ -658,7 +658,10 @@ try {
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   
   <script>
-    // Cancer Pie Chart
+    // Register the plugin
+    Chart.register(ChartDataLabels);
+
+    // Cancer Pie Chart with percentage labels
     new Chart(document.getElementById('cancerPie'), {
       type: 'pie',
       data: {
@@ -672,7 +675,14 @@ try {
       options: {
         responsive: true,
         plugins: {
-          legend: { position: 'bottom' },
+          legend: { 
+            position: 'bottom',
+            labels: {
+              font: {
+                size: 14
+              }
+            }
+          },
           tooltip: {
             callbacks: {
               label: function(context) {
@@ -683,12 +693,27 @@ try {
                 return `${label}: ${value} (${percentage}%)`;
               }
             }
+          },
+          datalabels: {
+            formatter: (value, ctx) => {
+              let sum = ctx.dataset.data.reduce((a, b) => a + b, 0);
+              let percentage = (value * 100 / sum).toFixed(1) + "%";
+              return percentage;
+            },
+            color: '#fff',
+            font: {
+              weight: 'bold',
+              size: 16
+            },
+            anchor: 'center',
+            align: 'center'
           }
         }
-      }
+      },
+      plugins: [ChartDataLabels]
     });
     
-    // Gender Pie Chart
+    // Gender Pie Chart with percentage labels
     new Chart(document.getElementById('genderPie'), {
       type: 'pie',
       data: {
@@ -702,7 +727,14 @@ try {
       options: {
         responsive: true,
         plugins: {
-          legend: { position: 'bottom' },
+          legend: { 
+            position: 'bottom',
+            labels: {
+              font: {
+                size: 14
+              }
+            }
+          },
           tooltip: {
             callbacks: {
               label: function(context) {
@@ -713,9 +745,24 @@ try {
                 return `${label}: ${value} (${percentage}%)`;
               }
             }
+          },
+          datalabels: {
+            formatter: (value, ctx) => {
+              let sum = ctx.dataset.data.reduce((a, b) => a + b, 0);
+              let percentage = (value * 100 / sum).toFixed(1) + "%";
+              return percentage;
+            },
+            color: '#fff',
+            font: {
+              weight: 'bold',
+              size: 16
+            },
+            anchor: 'center',
+            align: 'center'
           }
         }
-      }
+      },
+      plugins: [ChartDataLabels]
     });
     
     // Age Bar Chart
@@ -749,15 +796,34 @@ try {
       options: {
         responsive: true,
         plugins: {
-          legend: { position: 'bottom' },
+          legend: { 
+            position: 'bottom',
+            labels: {
+              font: {
+                size: 14
+              }
+            }
+          },
         },
         scales: {
           y: {
             beginAtZero: true,
-            title: { display: true, text: 'Number of Cases' }
+            title: { 
+              display: true, 
+              text: 'Number of Cases',
+              font: {
+                size: 14
+              }
+            }
           },
           x: {
-            title: { display: true, text: 'Age Range' }
+            title: { 
+              display: true, 
+              text: 'Age Range',
+              font: {
+                size: 14
+              }
+            }
           }
         }
       }

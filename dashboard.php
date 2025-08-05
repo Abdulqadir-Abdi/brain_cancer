@@ -541,7 +541,7 @@ if (in_array($userData['role'], ['small-admin', 'small-admi', 'admin'])) {
       
       <li class="nav-item">
         <a class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'dashboard.php' ? 'active' : '' ?>" href="dashboard.php">
-          <i class="fas fa-users-cog"></i> My Users
+          <i class="fas fa-users-cog"></i> Dashboard
         </a>
       </li>
       
@@ -556,7 +556,14 @@ if (in_array($userData['role'], ['small-admin', 'small-admi', 'admin'])) {
           <i class="fas fa-file-medical"></i> Report
         </a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'add_user.php' ? 'active' : '' ?>" href="add_user.php">
+          <i class="fas fa-file-medical"></i> user manegment
+        </a>
+      </li>
     </ul>
+     
+   
     
     <!-- Profile Section -->
     <div class="profile-section">
@@ -605,7 +612,7 @@ if (in_array($userData['role'], ['small-admin', 'small-admi', 'admin'])) {
               <i class="fas fa-user-shield"></i>
             </div>
             <div class="stat-number"><?= $stats['totalSmallAdmins'] ?></div>
-            <div>Small Admins</div>
+            <div>Hospital Admins</div>
           </div>
         </div>
       <?php elseif (in_array($userData['role'], ['small-admin', 'small-admi'])): ?>
@@ -835,9 +842,13 @@ if (in_array($userData['role'], ['small-admin', 'small-admi', 'admin'])) {
 
   <!-- Bootstrap JS Bundle with Popper -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   
   <script>
-    // Cancer Pie Chart
+    // Register the plugin
+    Chart.register(ChartDataLabels);
+
+    // Cancer Pie Chart with percentage labels
     new Chart(document.getElementById('cancerPie'), {
       type: 'pie',
       data: {
@@ -851,7 +862,14 @@ if (in_array($userData['role'], ['small-admin', 'small-admi', 'admin'])) {
       options: {
         responsive: true,
         plugins: {
-          legend: { position: 'bottom' },
+          legend: { 
+            position: 'bottom',
+            labels: {
+              font: {
+                size: 14
+              }
+            }
+          },
           tooltip: {
             callbacks: {
               label: function(context) {
@@ -862,12 +880,27 @@ if (in_array($userData['role'], ['small-admin', 'small-admi', 'admin'])) {
                 return `${label}: ${value} (${percentage}%)`;
               }
             }
+          },
+          datalabels: {
+            formatter: (value, ctx) => {
+              let sum = ctx.dataset.data.reduce((a, b) => a + b, 0);
+              let percentage = (value * 100 / sum).toFixed(1) + "%";
+              return percentage;
+            },
+            color: '#fff',
+            font: {
+              weight: 'bold',
+              size: 16
+            },
+            anchor: 'center',
+            align: 'center'
           }
         }
-      }
+      },
+      plugins: [ChartDataLabels]
     });
     
-    // Gender Pie Chart
+    // Gender Pie Chart with percentage labels
     new Chart(document.getElementById('genderPie'), {
       type: 'pie',
       data: {
@@ -881,7 +914,14 @@ if (in_array($userData['role'], ['small-admin', 'small-admi', 'admin'])) {
       options: {
         responsive: true,
         plugins: {
-          legend: { position: 'bottom' },
+          legend: { 
+            position: 'bottom',
+            labels: {
+              font: {
+                size: 14
+              }
+            }
+          },
           tooltip: {
             callbacks: {
               label: function(context) {
@@ -892,9 +932,24 @@ if (in_array($userData['role'], ['small-admin', 'small-admi', 'admin'])) {
                 return `${label}: ${value} (${percentage}%)`;
               }
             }
+          },
+          datalabels: {
+            formatter: (value, ctx) => {
+              let sum = ctx.dataset.data.reduce((a, b) => a + b, 0);
+              let percentage = (value * 100 / sum).toFixed(1) + "%";
+              return percentage;
+            },
+            color: '#fff',
+            font: {
+              weight: 'bold',
+              size: 16
+            },
+            anchor: 'center',
+            align: 'center'
           }
         }
-      }
+      },
+      plugins: [ChartDataLabels]
     });
     
     // Age Bar Chart
@@ -928,19 +983,55 @@ if (in_array($userData['role'], ['small-admin', 'small-admi', 'admin'])) {
       options: {
         responsive: true,
         plugins: {
-          legend: { position: 'bottom' },
+          legend: { 
+            position: 'bottom',
+            labels: {
+              font: {
+                size: 14
+              }
+            }
+          },
         },
         scales: {
           y: {
             beginAtZero: true,
-            title: { display: true, text: 'Number of Cases' }
+            title: { 
+              display: true, 
+              text: 'Number of Cases',
+              font: {
+                size: 14
+              }
+            }
           },
           x: {
-            title: { display: true, text: 'Age Range' }
+            title: { 
+              display: true, 
+              text: 'Age Range',
+              font: {
+                size: 14
+              }
+            }
           }
         }
       }
     });
+
+    // Account deletion confirmation
+    function confirmDelete() {
+      Swal.fire({
+        title: 'Delete Your Account?',
+        text: "This will permanently remove your account and all associated data.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location.href = 'delete_account.php';
+        }
+      });
+    }
   </script>
 </body>
 </html>
