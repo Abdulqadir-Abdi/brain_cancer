@@ -319,10 +319,14 @@ if ($user_row = $user_result->fetch_assoc()) {
         </a>
       </li>
 
-      <li class="nav-item">
-        <a class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'add_user.php' ? 'active' : '' ?>" href="add_user.php">
-          <i class="fas fa-file-medical"></i> user manegment
-        </a>
+      <?php if (in_array($role, ['admin', 'small-admi'])): ?>
+  <li class="nav-item">
+    <a class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'user_management.php' ? 'active' : '' ?>" href="user_management.php">
+      <i class="fas fa-file-medical"></i> User Management
+    </a>
+  </li>
+<?php endif; ?>
+
     </ul>
     
     <!-- Profile Section -->

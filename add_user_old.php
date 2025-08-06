@@ -16,35 +16,27 @@ header("X-XSS-Protection: 1; mode=block");
 header("Referrer-Policy: strict-origin-when-cross-origin");
 header("Strict-Transport-Security: max-age=31536000; includeSubDomains");
 
-// Environment configuration - robust path handling
-$configPath = __DIR__ . '/config.php';
-if (!file_exists($configPath)) {
-    die("Critical Error: Configuration file (config.php) not found in: " . __DIR__);
-}
-require_once $configPath;
-
-// Verify required constants are defined
-$requiredConstants = ['DB_HOST', 'DB_NAME', 'DB_USER', 'DB_PASS', 'DEFAULT_PROFILE_IMAGE'];
-foreach ($requiredConstants as $constant) {
-    if (!defined($constant)) {
-        die("Critical Error: Required constant {$constant} is not defined in config.php");
-    }
-}
+// Database configuration
+define('DB_HOST', 'localhost');
+define('DB_NAME', 'brain_cancer_db');
+define('DB_USER', 'root');
+define('DB_PASS', '');
+define('DEFAULT_PROFILE_IMAGE', 'images/default_profile.png');
 
 // Redirect if not logged in or not authorized
-if (!isset($_SESSION['user_id']) {
+if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit();
 }
 
 // Check authorization based on role
-$allowedRoles = ['admin', 'small-admin'];
+$allowedRoles = ['admin', 'small-admi'];
 if (!in_array($_SESSION['role'] ?? '', $allowedRoles)) {
     header("Location: unauthorized.php");
     exit();
 }
 
-// Database connection with PDO for better security
+// Database connection with PDO
 try {
     $dsn = "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4";
     $options = [
@@ -59,7 +51,7 @@ try {
     die("System error. Please try again later.");
 }
 
-// Initialize and sanitize user data
+// Initialize user data
 $userData = [
     'user_id' => filter_var($_SESSION['user_id'], FILTER_VALIDATE_INT),
     'email' => filter_var($_SESSION['user_email'] ?? '', FILTER_SANITIZE_EMAIL),
@@ -69,7 +61,7 @@ $userData = [
     'profile_image' => DEFAULT_PROFILE_IMAGE
 ];
 
-// Fetch user profile with prepared statement
+// Fetch user profile
 try {
     $stmt = $pdo->prepare("SELECT fullname, profile_image FROM users WHERE id = ?");
     $stmt->execute([$userData['user_id']]);
@@ -77,17 +69,13 @@ try {
     
     if ($profile) {
         $userData['fullname'] = htmlspecialchars($profile['fullname'] ?? $userData['fullname'], ENT_QUOTES, 'UTF-8');
-        $userData['profile_image'] = htmlspecialchars(
-            $profile['profile_image'] ?? DEFAULT_PROFILE_IMAGE, 
-            ENT_QUOTES, 
-            'UTF-8'
-        );
+        $userData['profile_image'] = htmlspecialchars($profile['profile_image'] ?? DEFAULT_PROFILE_IMAGE, ENT_QUOTES, 'UTF-8');
     }
 } catch (PDOException $e) {
     error_log("Profile fetch error: " . $e->getMessage());
 }
 
-// Initialize variables for user management
+// Initialize variables
 $userManagementData = [];
 $adminData = [];
 $smallAdmins = [];
@@ -98,9 +86,9 @@ $showAddForm = isset($_GET['action']) && $_GET['action'] === 'add';
 $form_title = "";
 $allowed_roles = [];
 
-// Set role permissions and fetch appropriate data
+// Set role permissions
 if ($userData['role'] === 'admin') {
-    $allowed_roles = ['small-admin'];
+    $allowed_roles = ['small-admi'];
     $form_title = "Register New Small Admin";
     
     try {
@@ -108,7 +96,7 @@ if ($userData['role'] === 'admin') {
             SELECT u.id, u.fullname, u.email, u.admin_code,
                    (SELECT COUNT(*) FROM users WHERE managed_by = u.admin_code) as user_count 
             FROM users u 
-            WHERE u.role = 'small-admin'
+            WHERE u.role = 'small-admi'
         ");
         $stmt->execute();
         $adminData = $stmt->fetchAll();
@@ -138,7 +126,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_user'])) {
     if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
         $errors[] = "Invalid CSRF token";
     } else {
-        // Sanitize and validate inputs
+        // Sanitize inputs
         $fullname = trim(htmlspecialchars($_POST['fullname'] ?? '', ENT_QUOTES, 'UTF-8'));
         $email = filter_var(trim($_POST['email'] ?? ''), FILTER_SANITIZE_EMAIL);
         $password = $_POST['password'] ?? '';
@@ -163,16 +151,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_user'])) {
         }
 
         // Generate admin code for small-admin
-        if ($role === 'small-admin') {
+        if ($role === 'small-admi') {
             $admin_code = 'ADM-' . bin2hex(random_bytes(4));
         }
 
         // Set manager relationship
-        if ($userData['role'] === 'small-admin' && $role === 'user') {
+        if ($userData['role'] === 'small-admi' && $role === 'user') {
             $managed_by = $userData['admin_code'];
         }
 
-        // Check email uniqueness if validation passes
+        // Check email uniqueness
         if (empty($errors)) {
             try {
                 $stmt = $pdo->prepare("SELECT id FROM users WHERE email = ?");
@@ -187,7 +175,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_user'])) {
             }
         }
 
-        // Create user if validation passes
+        // Create user
         if (empty($errors)) {
             try {
                 $hashed_password = password_hash($password, PASSWORD_DEFAULT);
@@ -208,16 +196,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_user'])) {
                 ]);
                 
                 $success = true;
-                $fullname = $email = '';
                 $showAddForm = false;
                 
-                // Refresh user management data
-                if ($userData['role'] === 'small-admin') {
+                // Refresh data
+                if ($userData['role'] === 'small-admi') {
                     $stmt = $pdo->prepare("SELECT id, fullname, email, role FROM users WHERE managed_by = ?");
                     $stmt->execute([$userData['admin_code']]);
                     $userManagementData = $stmt->fetchAll();
                     $managedUsers = $userManagementData;
                 }
+                
+                // Redirect to prevent form resubmission
+                header("Location: user_management.php?success=1");
+                exit();
             } catch (PDOException $e) {
                 error_log("User creation error: " . $e->getMessage());
                 $errors[] = "Failed to create user. Please try again.";
@@ -226,8 +217,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_user'])) {
     }
 }
 
-// Generate new CSRF token
-$_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+// Check for success message from redirect
+if (isset($_GET['success'])) {
+    $success = true;
+}
+
+// Generate CSRF token
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
 ?>
 
 <!DOCTYPE html>
@@ -432,7 +430,7 @@ $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
                 </a>
             </li>
             
-            <?php if (in_array($userData['role'], ['admin', 'small-admin'])): ?>
+            <?php if (in_array($userData['role'], ['admin', 'small-admi'])): ?>
                 <li class="nav-item">
                     <a class="nav-link active" href="user_management.php">
                         <i class="fas fa-users-cog"></i> User Management
@@ -470,6 +468,14 @@ $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
                 User Management
             </h3>
             
+            <?php if ($success): ?>
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <i class="fas fa-check-circle me-2"></i>
+                    <span>Account created successfully!</span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            <?php endif; ?>
+            
             <?php if ($showAddForm): ?>
                 <!-- Add User Form -->
                 <div class="user-form-container mt-4">
@@ -483,13 +489,6 @@ $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
                             <?php endif; ?>
                         </p>
                     </div>
-                    
-                    <?php if ($success): ?>
-                        <div class="alert alert-success d-flex align-items-center">
-                            <i class="fas fa-check-circle me-2"></i>
-                            <div>Account created successfully!</div>
-                        </div>
-                    <?php endif; ?>
                     
                     <?php if (!empty($errors)): ?>
                         <div class="alert alert-danger">
@@ -516,7 +515,7 @@ $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fas fa-user"></i></span>
                                     <input type="text" class="form-control" id="fullname" name="fullname" 
-                                           value="<?= htmlspecialchars($fullname ?? '', ENT_QUOTES, 'UTF-8') ?>" 
+                                           value="<?= htmlspecialchars($_POST['fullname'] ?? '', ENT_QUOTES, 'UTF-8') ?>" 
                                            required maxlength="100">
                                     <div class="invalid-feedback">
                                         Please provide a valid full name (1-100 characters).
@@ -529,7 +528,7 @@ $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fas fa-envelope"></i></span>
                                     <input type="email" class="form-control" id="email" name="email" 
-                                           value="<?= htmlspecialchars($email ?? '', ENT_QUOTES, 'UTF-8') ?>" 
+                                           value="<?= htmlspecialchars($_POST['email'] ?? '', ENT_QUOTES, 'UTF-8') ?>" 
                                            required maxlength="255">
                                     <div class="invalid-feedback">
                                         Please provide a valid email address.
@@ -585,14 +584,15 @@ $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
                     </form>
                 </div>
             <?php else: ?>
+                
                 <!-- User Management Table -->
-                <?php if (in_array($userData['role'], ['admin', 'small-admin'])): ?>
+                <?php if (in_array($userData['role'], ['admin', 'small-admi'])): ?>
                     <a href="user_management.php?action=add" class="btn btn-primary mb-3">
                         <i class="fas fa-user-plus"></i> Add New User
                     </a>
                 <?php endif; ?>
                 
-                <?php if ($userData['role'] === 'small-admin' && !empty($managedUsers)): ?>
+                <?php if ($userData['role'] === 'small-admi' && !empty($managedUsers)): ?>
                     <h4>Your Managed Users</h4>
                     <div class="table-responsive">
                         <table class="table table-bordered table-hover">
@@ -627,7 +627,7 @@ $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
                             </tbody>
                         </table>
                     </div>
-                <?php elseif ($userData['role'] === 'small-admin' && empty($managedUsers)): ?>
+                <?php elseif ($userData['role'] === 'small-admi' && empty($managedUsers)): ?>
                     <div class="alert alert-info">
                         <i class="fas fa-info-circle me-2"></i> You don't have any managed users yet.
                     </div>

@@ -557,7 +557,7 @@ if (in_array($userData['role'], ['small-admin', 'small-admi', 'admin'])) {
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'add_user.php' ? 'active' : '' ?>" href="add_user.php">
+        <a class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'user_management.php' ? 'active' : '' ?>" href="user_management.php">
           <i class="fas fa-file-medical"></i> user manegment
         </a>
       </li>
@@ -761,84 +761,7 @@ if (in_array($userData['role'], ['small-admin', 'small-admi', 'admin'])) {
     </div>
     
     <!-- User Management Section -->
-    <div class="chart-container mt-4">
-      <h3 class="chart-title">
-        <i class="fas fa-users-cog text-primary"></i>
-        User Management
-      </h3>
-      
-      <?php if (in_array($userData['role'], ['admin', 'small-admin', 'small-admi'])): ?>
-        <a href="add_user.php" class="btn btn-primary mb-3">
-          <i class="fas fa-user-plus"></i> Add New User
-        </a>
-      <?php endif; ?>
-      
-      <?php if (in_array($userData['role'], ['small-admin', 'small-admi']) && !empty($userManagementData)): ?>
-        <h4>Your Managed Users</h4>
-        <div class="table-responsive">
-          <table class="table table-bordered table-hover">
-            <thead class="thead-light">
-              <tr>
-                <th>#</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Role</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              <?php foreach ($userManagementData as $i => $row): ?>
-              <tr>
-                <td><?= $i + 1 ?></td>
-                <td><?= htmlspecialchars($row['fullname']) ?></td>
-                <td><?= htmlspecialchars($row['email']) ?></td>
-                <td><?= htmlspecialchars($row['role']) ?></td>
-                <td>
-                  <a href="edit_user.php?id=<?= $row['id'] ?>" class="btn btn-sm btn-warning">
-                    <i class="fas fa-edit"></i> Edit
-                  </a>
-                  <a href="delete_user.php?id=<?= $row['id'] ?>" 
-                     onclick="return confirm('Are you sure?')" 
-                     class="btn btn-sm btn-danger">
-                    <i class="fas fa-trash"></i> Delete
-                  </a>
-                </td>
-              </tr>
-              <?php endforeach; ?>
-            </tbody>
-          </table>
-        </div>
-      <?php endif; ?>
-      
-      <?php if ($userData['role'] === 'admin' && isset($adminData) && !empty($adminData)): ?>
-        <h4>All Small Admins</h4>
-        <div class="table-responsive">
-          <table class="table table-bordered table-hover">
-            <thead class="thead-light">
-              <tr>
-                <th>#</th>
-                <th>Full Name</th>
-                <th>Email</th>
-                <th>Admin Code</th>
-                <th>Managed Users</th>
-              </tr>
-            </thead>
-            <tbody>
-              <?php foreach ($adminData as $i => $row): ?>
-              <tr>
-                <td><?= $i + 1 ?></td>
-                <td><?= htmlspecialchars($row['fullname']) ?></td>
-                <td><?= htmlspecialchars($row['email']) ?></td>
-                <td><?= htmlspecialchars($row['admin_code']) ?></td>
-                <td><?= $row['user_count'] ?></td>
-              </tr>
-              <?php endforeach; ?>
-            </tbody>
-          </table>
-        </div>
-      <?php endif; ?>
-    </div>
-  </div>
+    
 
   <!-- Bootstrap JS Bundle with Popper -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

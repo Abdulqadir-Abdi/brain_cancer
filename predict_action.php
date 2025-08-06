@@ -137,7 +137,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['image'])) {
         </div>
         
         <p class="text-muted small mb-4">
-            Please upload a clear MRI scan image in JPG, PNG, or DICOM format
+            Please upload a clear MRI scan image in JPG, PNG,
         </p>
         
         <a href="predict.php" class="btn btn-home">
