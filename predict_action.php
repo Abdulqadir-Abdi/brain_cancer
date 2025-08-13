@@ -280,8 +280,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['image'])) {
             </div> -->
             
             <div class="text-center mt-3">
-                <a href="dashboard.php" class="btn btn-back btn-sm text-white">
-                    <i class="fas fa-arrow-left me-1"></i>Back to Dashboard
+                <a href="predict.php" class="btn btn-back btn-sm text-white">
+                    <i class="fas fa-arrow-left me-1"></i>Back to Prediction Form
                 </a>
                 <p class="timestamp mt-2">
                     <i class="fas fa-clock me-1"></i><?php echo date('M j, Y g:i A'); ?>
